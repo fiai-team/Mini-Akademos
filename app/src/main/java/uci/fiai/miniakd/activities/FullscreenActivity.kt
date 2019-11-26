@@ -1,5 +1,6 @@
 package uci.fiai.miniakd.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,8 @@ import android.view.animation.AnimationUtils
 import android.content.pm.PackageManager
 import android.view.View.GONE
 import uci.fiai.miniakd.R
+import kotlin.concurrent.schedule
+import java.util.*
 
 
 class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
@@ -43,6 +46,15 @@ class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
         appNameTextView.animation = AnimationUtils.loadAnimation(this,
             R.anim.fade_in
         )
+
+
+        Timer().schedule(3000) {
+            showNextActivity()
+        }
+    }
+
+    private fun showNextActivity() {
+        Intent(this, MainActivity::class.java)
     }
 
     /*override fun onStateChange(state: Int) {
