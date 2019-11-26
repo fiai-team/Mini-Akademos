@@ -14,18 +14,10 @@ class CutsFragment : Fragment() {
 
     private lateinit var cutsFragmentViewModel: CutsFragmentViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         cutsFragmentViewModel =
             ViewModelProviders.of(this).get(CutsFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_cuts, container, false)
-        val textView: TextView = root.findViewById(R.id.text_share)
-        cutsFragmentViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
         return root
     }
 }

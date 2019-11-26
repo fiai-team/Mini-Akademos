@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/sectionsGroup"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_person"
@@ -22,7 +24,9 @@
             android:title="Cortes evalutivos" />
     </group>
 
-    <group>
+    <group
+        android:id="@+id/otherGroup"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_settings"

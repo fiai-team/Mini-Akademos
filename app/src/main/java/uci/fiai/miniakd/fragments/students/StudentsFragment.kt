@@ -14,18 +14,11 @@ class StudentsFragment : Fragment() {
 
     private lateinit var studentsFragmentViewModel: StudentsFragmentViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         studentsFragmentViewModel =
             ViewModelProviders.of(this).get(StudentsFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_students, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        studentsFragmentViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }

@@ -14,18 +14,10 @@ class BrigadesFragment : Fragment() {
 
     private lateinit var brigadesFragmentViewModel: BrigadesFragmentViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        brigadesFragmentViewModel =
-            ViewModelProviders.of(this).get(BrigadesFragmentViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        brigadesFragmentViewModel = ViewModelProviders.of(this).get(BrigadesFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragments_brigades, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        brigadesFragmentViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }
