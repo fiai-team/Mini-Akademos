@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
+class FullscreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
