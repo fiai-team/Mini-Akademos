@@ -4,6 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_fullscreen.*
+import android.view.animation.AnimationUtils
+import android.R.attr.versionName
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.View.GONE
+
 
 class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
 
@@ -21,15 +31,21 @@ class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
-        /*fillableLoader.setOnStateChangeListener(this)
-        fillableLoader.setSvgPath(SPLASH)
-        fillableLoader.start()*/
+        versionTextView.let {
+            try {
+                val packageInfo = packageManager.getPackageInfo(packageName, 0)
+                it.append(packageInfo.versionName)
+            } catch (e: PackageManager.NameNotFoundException) {
+                it.visibility = GONE
+            }
+        }
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-
+        appNameTextView.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
     }
 
     /*override fun onStateChange(state: Int) {

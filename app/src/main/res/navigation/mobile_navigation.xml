@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="uci.fiai.miniakd.activities.ui.home.HomeFragment"
+        android:label="Estudiantes"
+        tools:layout="@layout/fragment_students" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="uci.fiai.miniakd.activities.ui.gallery.GalleryFragment"
+        android:label="Brigadas"
+        tools:layout="@layout/fragments_brigades" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="uci.fiai.miniakd.activities.ui.slideshow.SlideshowFragment"
+        android:label="Evaluaciones"
+        tools:layout="@layout/fragment_evaluations" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="uci.fiai.miniakd.activities.ui.tools.ToolsFragment"
+        android:label="Cortes evaluativos"
+        tools:layout="@layout/fragment_cuts" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="uci.fiai.miniakd.activities.ui.share.ShareFragment"
+        android:label="Configuración"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="uci.fiai.miniakd.activities.ui.send.SendFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_about" />
+</navigation>
