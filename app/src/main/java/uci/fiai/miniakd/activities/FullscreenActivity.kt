@@ -1,18 +1,13 @@
-package uci.fiai.miniakd
+package uci.fiai.miniakd.activities
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_fullscreen.*
 import android.view.animation.AnimationUtils
-import android.R.attr.versionName
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View.GONE
+import uci.fiai.miniakd.R
 
 
 class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
@@ -45,7 +40,9 @@ class FullscreenActivity : AppCompatActivity()/*, OnStateChangeListener*/ {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        appNameTextView.animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        appNameTextView.animation = AnimationUtils.loadAnimation(this,
+            R.anim.fade_in
+        )
     }
 
     /*override fun onStateChange(state: Int) {

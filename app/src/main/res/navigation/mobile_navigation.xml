@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="uci.fiai.miniakd.activities.ui.home.HomeFragment"
+        android:name="uci.fiai.miniakd.fragments.brigades.BrigadesFragment"
         android:label="Estudiantes"
         tools:layout="@layout/fragment_students" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="uci.fiai.miniakd.activities.ui.gallery.GalleryFragment"
+        android:name="uci.fiai.miniakd.fragments.students.StudentsFragment"
         android:label="Brigadas"
         tools:layout="@layout/fragments_brigades" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="uci.fiai.miniakd.activities.ui.slideshow.SlideshowFragment"
+        android:name="uci.fiai.miniakd.fragments.settings.SettingsFragment"
         android:label="Evaluaciones"
         tools:layout="@layout/fragment_evaluations" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="uci.fiai.miniakd.activities.ui.tools.ToolsFragment"
+        android:name="uci.fiai.miniakd.fragments.about.AboutFragment"
         android:label="Cortes evaluativos"
         tools:layout="@layout/fragment_cuts" />
 
     <fragment
         android:id="@+id/nav_share"
-        android:name="uci.fiai.miniakd.activities.ui.share.ShareFragment"
+        android:name="uci.fiai.miniakd.fragments.cuts.CutsFragment"
         android:label="Configuración"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_send"
-        android:name="uci.fiai.miniakd.activities.ui.send.SendFragment"
+        android:name="uci.fiai.miniakd.fragments.evaluations.EvaluationsFragment"
         android:label="Acerca de"
         tools:layout="@layout/fragment_about" />
 </navigation>
