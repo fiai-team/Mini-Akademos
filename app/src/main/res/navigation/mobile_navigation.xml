@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="uci.fiai.miniakd.fragments.brigades.BrigadesFragment"
+        android:name="uci.fiai.miniakd.fragments.students.StudentsFragment"
         android:label="Estudiantes"
         tools:layout="@layout/fragment_students" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="uci.fiai.miniakd.fragments.students.StudentsFragment"
+        android:name="uci.fiai.miniakd.fragments.brigades.BrigadesFragment"
         android:label="Brigadas"
         tools:layout="@layout/fragments_brigades" />
 
