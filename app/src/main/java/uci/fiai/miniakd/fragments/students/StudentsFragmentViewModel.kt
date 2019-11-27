@@ -28,7 +28,7 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModel(app
     //endregion
 
     override fun onTaskFinished(result: List<Any>, taskName: String) {
-        if (taskName == LoadStudentsByBrigadeAsyncTask::class.simpleName) {
+        if (taskName == LoadStudentsByBrigadeAsyncTask::class.qualifiedName) {
             _studentsList.apply {
                 this.value = result as List<Student>
             }
