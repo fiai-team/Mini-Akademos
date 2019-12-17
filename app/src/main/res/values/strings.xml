@@ -17,5 +17,6 @@
     <string name="string_add">Adicionar</string>
     <string name="positive_string">Si</string>
     <string name="negative">No</string>
+    <string name="emptyStudentsByBrigade">No hay estudiantes añadidos en la brigada</string>
 
 </resources>

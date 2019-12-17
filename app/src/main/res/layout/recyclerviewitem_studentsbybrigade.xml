@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/dimen_4dp"
+    android:layout_margin="@dimen/dimen_5dp">
 
-
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="asdasa"/>
+        android:padding="@dimen/dimen_10dp">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/personImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_person"
+            android:tint="?android:attr/colorPrimary"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_toEndOf="@id/personImageView"
+           android:orientation="vertical"
+           android:layout_centerVertical="true">
+
+           <TextView
+               android:id="@+id/nameTextView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="17sp"
+               android:textStyle="bold"/>
+
+           <TextView
+               android:id="@+id/brigadeTextView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+       </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

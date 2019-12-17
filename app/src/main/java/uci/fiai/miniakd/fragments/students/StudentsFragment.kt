@@ -28,6 +28,7 @@ import uci.fiai.miniakd.utils.snackBar
 class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, AddStudentBottomSheetDialog.AddStudentListener {
 
     private lateinit var viewModel: StudentsFragmentViewModel
+    private var currentIndex = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(StudentsFragmentViewModel::class.java)
@@ -46,6 +47,7 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (!speedDialView.isShown) speedDialView.show()
+                currentIndex = tab.position
             }
         }
 
@@ -63,13 +65,14 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 (root as RelativeLayout).removeView(emptyLayoutRoot)
             }
         })
-        viewModel.brigadesList.observe(this, Observer {
+        viewModel.brigadesList.observe(this, Observer { it ->
             if (it.isEmpty()) {
                 toggleTabsUiVisibility(false)
             } else {
                 toggleTabsUiVisibility(true)
                 fragmentManager?.let {
-                    viewPager.adapter = FragmentViewPagerAdapter(it)
+                    val adapter = FragmentViewPagerAdapter(it)
+                    viewPager.adapter = adapter
                 }
             }
         })
@@ -122,7 +125,7 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 .input("Nombre de la brigada", "", false) { _, input ->
                     viewModel.addBrigade(input.toString())
                     view?.let { v ->
-                        snackBar(v, "Brigada ${input.toString()} agregada", false)
+                        snackBar(v, "Brigada $input agregada", false)
                     }
                 }
                 .inputRange(4, 10)
@@ -148,23 +151,24 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                     showDialogAddBrigade()
                 }
             }
-
             return false
         }
         else
             return false
     }
 
-    private inner class FragmentViewPagerAdapter internal constructor(val fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm) {
+    inner class FragmentViewPagerAdapter (fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
         override fun getItem(position: Int): StudentsByBrigadeListFragment {
-            return StudentsByBrigadeListFragment()
+            val fragment = StudentsByBrigadeListFragment()
+            val arguments = Bundle()
+            arguments.putString(StudentsByBrigadeListFragment.BRIGADE_ARG, viewModel.brigadesList.value!![position].name)
+            fragment.arguments = arguments
+            return fragment
         }
 
         override fun getCount(): Int = viewModel.brigadesList.value!!.size
 
         override fun getPageTitle(position: Int): CharSequence = viewModel.brigadesList.value!![position].name
     }
-
-
 }

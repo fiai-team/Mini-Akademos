@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_studentsbybrigade.*
+import kotlinx.android.synthetic.main.recyclerviewitem_studentsbybrigade.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Student
 
@@ -19,13 +21,18 @@ class StudentsByBrigadeListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(StudentsByBrigadeViewModel::class.java)
+        viewModel.init(arguments!!.getString(BRIGADE_ARG, ""))
         val root =  inflater.inflate(R.layout.fragment_studentsbybrigade, container, false)
+
+        root.findViewById<TextView>(R.id.emptyDescriptionTextView).text = getString(R.string.emptyStudentsByBrigade)
 
         viewModel.studentsList.observe(this, Observer {
             if (it.isEmpty()) {
                 recyclerView.visibility = View.GONE
+                emptyLayoutInclude.visibility = View.VISIBLE
             } else {
                 recyclerView.visibility = View.VISIBLE
+                emptyLayoutInclude.visibility = View.GONE
                 recyclerView.adapter = StudentsByBrigadeAdapter(context!!, it)
             }
         })
@@ -46,11 +53,17 @@ class StudentsByBrigadeListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+            holder.nameTextView.text = "${students[position].name} ${students[position].lastName}"
+            holder.brigadeTextView.text = "Brigada: ${students[position].brigadeName}"
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+            val nameTextView: TextView = itemView.nameTextView
+            val brigadeTextView: TextView = itemView.brigadeTextView
         }
+    }
+
+    companion object {
+        const val BRIGADE_ARG = "BRIGADE_ARG"
     }
 }

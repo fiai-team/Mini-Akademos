@@ -8,10 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
+import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 import uci.fiai.miniakd.tasks.LoadStudentsByBrigadeAsyncTask
 
 class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(application), AndroidViewModelListener {
 
+    private var brigadeArg: String = ""
     //region Mutable Fields
     private var _studentsList = MutableLiveData<List<Student>>().apply {
         this.value = ArrayList(0)
@@ -22,21 +24,27 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
     val studentsList: LiveData<List<Student>> = _studentsList
     //endregion
 
-    init {
-        update()
-    }
-
-
     override fun context(): Context {
         return getApplication<Application>().applicationContext
     }
 
     override fun onTaskFinished(result: List<Any>, taskName: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when(taskName) {
+            LoadStudentsByBrigadeAsyncTask::class.qualifiedName -> {
+                _studentsList.apply {
+                    this.value = result as List<Student>
+                }
+            }
+        }
     }
 
-    private fun update() {
+    fun init(brigadeArg: String) {
+        this.brigadeArg = brigadeArg
+        update()
+    }
+
+    fun update() {
         val asyncTack1 = LoadStudentsByBrigadeAsyncTask(this)
-        asyncTack1.execute()
+        asyncTack1.execute(brigadeArg)
     }
 }

@@ -16,4 +16,7 @@ interface StudentsDao {
 
     @Delete
     fun delete(user: Student)
+
+    @Query("SELECT * FROM TStudents WHERE brigadeName = :s")
+    fun getAllByBrigade(s: String): List<Student>
 }

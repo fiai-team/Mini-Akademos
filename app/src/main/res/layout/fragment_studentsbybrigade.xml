@@ -9,8 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <include layout="@layout/fragment_empty"
+        android:id="@+id/emptyLayoutInclude"
+        android:visibility="gone"/>
 
 </RelativeLayout>

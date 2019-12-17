@@ -9,13 +9,13 @@ class Student() {
     var id: Int = 0
     var name: String = ""
     var lastName: String = ""
-    var brigadeId: Int = 0
+    var brigadeName: String = ""
     var isRepentant: Boolean = false
 
-    constructor(name: String, lastName: String, brigadeId: Int, isRepentant: Boolean) : this() {
+    constructor(name: String, lastName: String, brigadeName: String, isRepentant: Boolean) : this() {
         this.name = name
         this.lastName = lastName
-        this.brigadeId = brigadeId
+        this.brigadeName = brigadeName
         this.isRepentant = isRepentant
     }
 }
