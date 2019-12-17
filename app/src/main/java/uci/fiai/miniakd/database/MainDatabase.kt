@@ -4,12 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import uci.fiai.miniakd.database.dao.BrigadeDao
 import uci.fiai.miniakd.database.dao.StudentsDao
+import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
 
-@Database(entities = [Student::class], version = 1)
+@Database(entities = [Student::class, Brigade::class], version = 1)
 abstract class MainDatabase : RoomDatabase() {
-    abstract fun studentsDao(): StudentsDao
+
+    abstract fun students(): StudentsDao
+
+    abstract fun brigades(): BrigadeDao
 
     companion object {
         private const val DATABASE_NAME = "MainDatabase"

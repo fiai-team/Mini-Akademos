@@ -3,5 +3,19 @@
 
     <string name="title_activity_main">MainActivity</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="empty_students">No hay estudiantes registrados</string>
+
+    <string name="string_add_course">Nueva asignatura</string>
+    <string name="string_add_group">Nueva brigada</string>
+    <string name="string_add_student">Nuevo estudiante</string>
+    <string name="string_add_turn">Nuevo turno</string>
+
+    <string name="string_add_group_first">No hay brigadas, ¿quieres crear una nueva brigada?</string>
+
+    <string name="string_ok">Aceptar</string>
+    <string name="string_cancel">Cancelar</string>
+    <string name="string_add">Adicionar</string>
+    <string name="positive_string">Si</string>
+    <string name="negative">No</string>
 
 </resources>

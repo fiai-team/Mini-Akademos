@@ -8,7 +8,7 @@ class LoadStudentsByBrigadeAsyncTask(private val listener: AndroidViewModelListe
     AsyncTask<Void, Void, List<Student>>() {
 
     override fun doInBackground(vararg params: Void?): List<Student> {
-        return MainDatabase.instance(listener.context()).studentsDao().getAll()
+        return MainDatabase.instance(listener.context()).students().getAll()
     }
 
     override fun onPostExecute(result: List<Student>?) {
