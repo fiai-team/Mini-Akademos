@@ -76,7 +76,6 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 }
             }
         })
-
         return root
     }
 

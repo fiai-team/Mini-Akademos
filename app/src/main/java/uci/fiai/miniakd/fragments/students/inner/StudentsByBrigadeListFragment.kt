@@ -46,6 +46,7 @@ class StudentsByBrigadeListFragment : Fragment() {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(R.layout.recyclerviewitem_studentsbybrigade, parent, false)
             return ViewHolder(view)
+
         }
 
         override fun getItemCount(): Int {

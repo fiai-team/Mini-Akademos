@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragments_brigades.*
 import kotlinx.android.synthetic.main.recyclerviewitem_brigade.view.*
@@ -16,6 +17,8 @@ import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Brigade
 
 class BrigadesFragment : Fragment() {
+
+    var callback: ItemTouchHelper.Callback? = null
 
     private lateinit var viewModel: BrigadesFragmentViewModel
 
