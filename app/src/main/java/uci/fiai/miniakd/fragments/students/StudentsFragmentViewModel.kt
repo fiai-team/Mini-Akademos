@@ -2,11 +2,11 @@ package uci.fiai.miniakd.fragments.students
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import uci.fiai.miniakd.database.MainDatabase
+import uci.fiai.miniakd.database.addStudent
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
@@ -73,10 +73,12 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun addStudent(student: Student) {
         val thread = Thread {
-            MainDatabase.instance(context()).students().insertAll(student)
+            MainDatabase.instance(context()).addStudent(context(), student)
             update()
         }
         thread.start()
     }
 
 }
+
+

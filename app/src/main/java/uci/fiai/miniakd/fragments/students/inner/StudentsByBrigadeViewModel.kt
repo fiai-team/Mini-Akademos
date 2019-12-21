@@ -13,7 +13,7 @@ import uci.fiai.miniakd.tasks.LoadStudentsByBrigadeAsyncTask
 
 class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(application), AndroidViewModelListener {
 
-    private var brigadeArg: String = ""
+    private var brigadeArg: Int = 0
     //region Mutable Fields
     private var _studentsList = MutableLiveData<List<Student>>().apply {
         this.value = ArrayList(0)
@@ -38,12 +38,12 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
         }
     }
 
-    fun init(brigadeArg: String) {
+    fun init(brigadeArg: Int) {
         this.brigadeArg = brigadeArg
         update()
     }
 
-    fun update() {
+    private fun update() {
         val asyncTack1 = LoadStudentsByBrigadeAsyncTask(this)
         asyncTack1.execute(brigadeArg)
     }

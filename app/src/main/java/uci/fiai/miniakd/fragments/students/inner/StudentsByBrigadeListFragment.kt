@@ -21,7 +21,7 @@ class StudentsByBrigadeListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(StudentsByBrigadeViewModel::class.java)
-        viewModel.init(arguments!!.getString(BRIGADE_ARG, ""))
+        viewModel.init(arguments!!.getInt(BRIGADE_ARG, 0))
         val root =  inflater.inflate(R.layout.fragment_studentsbybrigade, container, false)
 
         root.findViewById<TextView>(R.id.emptyDescriptionTextView).text = getString(R.string.emptyStudentsByBrigade)
@@ -54,12 +54,10 @@ class StudentsByBrigadeListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.nameTextView.text = "${students[position].name} ${students[position].lastName}"
-            holder.brigadeTextView.text = "Brigada: ${students[position].brigadeName}"
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val nameTextView: TextView = itemView.nameTextView
-            val brigadeTextView: TextView = itemView.brigadeTextView
         }
     }
 

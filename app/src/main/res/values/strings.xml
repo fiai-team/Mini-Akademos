@@ -18,5 +18,7 @@
     <string name="positive_string">Si</string>
     <string name="negative">No</string>
     <string name="emptyStudentsByBrigade">No hay estudiantes añadidos en la brigada</string>
+    <string name="student_count_singular">%d estudiante</string>
+    <string name="student_count_plural">%d estudiantes</string>
 
 </resources>

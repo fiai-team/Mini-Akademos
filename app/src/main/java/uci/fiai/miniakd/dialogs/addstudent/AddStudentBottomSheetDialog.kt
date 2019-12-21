@@ -36,7 +36,7 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
             val group = spinner.selectedItem as Brigade
             val isRepentant = checkbox.isChecked
 
-            listener.onAddStudent(Student(name, lastName, group.name, isRepentant))
+            listener.onAddStudent(Student(name, lastName, group.id, isRepentant))
 
             this@AddStudentBottomSheetDialog.dismiss()
         }

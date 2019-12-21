@@ -4,12 +4,12 @@ import android.os.AsyncTask
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Student
 
-class LoadStudentsByBrigadeAsyncTask(private val listener: AndroidViewModelListener) : AsyncTask<String, Void, List<Student>>() {
+class LoadStudentsByBrigadeAsyncTask(private val listener: AndroidViewModelListener) : AsyncTask<Int, Void, List<Student>>() {
 
-    override fun doInBackground(vararg params: String): List<Student> {
+    override fun doInBackground(vararg params: Int?): List<Student>? {
         return when {
             params.isEmpty() -> MainDatabase.instance(listener.context()).students().getAll()
-            params.size == 1 -> MainDatabase.instance(listener.context()).students().getAllByBrigade(params[0])
+            params.size == 1 -> MainDatabase.instance(listener.context()).students().getAllByBrigade(params[0]!!)
             else -> ArrayList(0)
         }
     }
