@@ -22,6 +22,10 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_today"
             android:title="Cortes evalutivos" />
+        <item
+            android:id="@+id/nav_turns"
+            android:icon="@drawable/ic_time"
+            android:title="Turnos" />
     </group>
 
     <group

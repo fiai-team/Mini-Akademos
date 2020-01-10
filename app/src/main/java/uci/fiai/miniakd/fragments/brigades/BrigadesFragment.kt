@@ -18,7 +18,7 @@ import uci.fiai.miniakd.database.entities.Brigade
 
 class BrigadesFragment : Fragment() {
 
-    var callback: ItemTouchHelper.Callback? = null
+    var callback: ItemTouchHelper.SimpleCallback? = null
 
     private lateinit var viewModel: BrigadesFragmentViewModel
 
@@ -30,6 +30,8 @@ class BrigadesFragment : Fragment() {
             if (context != null)
                 recyclerView.adapter = BrigadesRecyclerViewAdapter(context!!, it)
         })
+
+
 
         return root
     }

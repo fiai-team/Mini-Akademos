@@ -12,13 +12,21 @@
 
     <string name="string_add_group_first">No hay brigadas, ¿quieres crear una nueva brigada?</string>
 
+    <string name="string_delete_student">Eliminar estudiante</string>
+    <string name="string_delete_course">Eliminar asignatura</string>
+    <string name="string_delete_turn">Eliminar turno</string>
+
     <string name="string_ok">Aceptar</string>
     <string name="string_cancel">Cancelar</string>
     <string name="string_add">Adicionar</string>
     <string name="positive_string">Si</string>
     <string name="negative">No</string>
+    <string name="string_edit">Editar</string>
+    <string name="string_remove">Eliminar</string>
+    <string name="string_no_delete">No eliminar</string>
     <string name="emptyStudentsByBrigade">No hay estudiantes añadidos en la brigada</string>
     <string name="student_count_singular">%d estudiante</string>
     <string name="student_count_plural">%d estudiantes</string>
+    <string name="string_yes">Sí</string>
 
 </resources>

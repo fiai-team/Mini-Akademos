@@ -30,6 +30,12 @@
         tools:layout="@layout/fragment_cuts" />
 
     <fragment
+        android:id="@+id/nav_turns"
+        android:name="uci.fiai.miniakd.fragments.turns.TurnsFragment"
+        android:label="Turnos"
+        tools:layout="@layout/turns_fragment" />
+
+    <fragment
         android:id="@+id/nav_share"
         android:name="uci.fiai.miniakd.fragments.cuts.CutsFragment"
         android:label="Configuración"

@@ -15,13 +15,13 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
 
     private var brigadeArg: Int = 0
     //region Mutable Fields
-    private var _studentsList = MutableLiveData<List<Student>>().apply {
+    private var _studentsList = MutableLiveData<ArrayList<Student>>().apply {
         this.value = ArrayList(0)
     }
     //endregion
 
     //region LiveData Properties
-    val studentsList: LiveData<List<Student>> = _studentsList
+    val studentsList: LiveData<ArrayList<Student>> = _studentsList
     //endregion
 
     override fun context(): Context {
@@ -32,7 +32,7 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
         when(taskName) {
             LoadStudentsByBrigadeAsyncTask::class.qualifiedName -> {
                 _studentsList.apply {
-                    this.value = result as List<Student>
+                    this.value = result as ArrayList<Student>
                 }
             }
         }
@@ -46,5 +46,13 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
     private fun update() {
         val asyncTack1 = LoadStudentsByBrigadeAsyncTask(this)
         asyncTack1.execute(brigadeArg)
+    }
+
+    fun removeStudent(student: Student) {
+
+    }
+
+    fun markToRemove(student: Student, position: Int) {
+        studentsList.value?.get(position)?.isRemoving = true
     }
 }
