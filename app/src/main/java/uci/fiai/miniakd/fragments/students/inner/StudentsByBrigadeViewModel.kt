@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import uci.fiai.miniakd.database.MainDatabase
+import uci.fiai.miniakd.database.addStudent
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
@@ -49,10 +51,16 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
     }
 
     fun removeStudent(student: Student) {
-
+        Thread {
+            MainDatabase.instance(context()).students().delete(student)
+            update()
+        }.start()
     }
 
-    fun markToRemove(student: Student, position: Int) {
-        studentsList.value?.get(position)?.isRemoving = true
+    fun saveEditStudent(student: Student) {
+        Thread {
+            MainDatabase.instance(context()).students().update(student)
+            update()
+        }.start()
     }
 }

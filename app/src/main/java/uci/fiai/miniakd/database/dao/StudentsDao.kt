@@ -1,9 +1,6 @@
 package uci.fiai.miniakd.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import uci.fiai.miniakd.database.entities.Student
 
 @Dao
@@ -19,4 +16,7 @@ interface StudentsDao {
 
     @Query("SELECT * FROM TStudents WHERE brigadeId = :s")
     fun getAllByBrigade(s: Int): List<Student>
+
+    @Update
+    fun update(student: Student)
 }

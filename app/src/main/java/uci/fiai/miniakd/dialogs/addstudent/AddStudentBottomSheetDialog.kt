@@ -15,15 +15,28 @@ import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
 
-class AddStudentBottomSheetDialog(private var listener: AddStudentListener, private val brigades: List<Brigade>) : BottomSheetDialogFragment() {
+class AddStudentBottomSheetDialog(private var listener: AddStudentListener, private val brigades: List<Brigade>? = null, private val student: Student? = null) : BottomSheetDialogFragment() {
 
     interface AddStudentListener {
-        fun onAddStudent(student: Student)
+        /**
+         * @param student Student objetive of the interaction
+         * @param isEditionOperation A [Boolean] value showing if the [student] is new or are in edition.
+         */
+        fun onAddStudentInteraction(student: Student, isEditionOperation: Boolean)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.bottomsheetdialog_addstudent, container, false)
-        view.spinner.adapter = BrigadesSpinnerAdapter(context!!, brigades)
+        if (brigades == null) {
+            view.spinner.visibility = View.GONE
+        } else {
+            view.spinner.adapter = BrigadesSpinnerAdapter(context!!)
+        }
+        if (student != null) {
+            view.nameTextView.setText(student.name)
+            view.lastNameTextView.setText(student.lastName)
+            view.checkbox.isChecked = student.isRepentant
+        }
         return view
     }
 
@@ -31,12 +44,22 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
         super.onViewCreated(view, savedInstanceState)
 
         addStudentButton.setOnClickListener {
-            val name = nameTextView.text.toString()
-            val lastName = lastNameTextView.text.toString()
-            val group = spinner.selectedItem as Brigade
-            val isRepentant = checkbox.isChecked
+            if (student == null) {
+                val name = nameTextView.text.toString()
+                val lastName = lastNameTextView.text.toString()
+                val group = spinner.selectedItem as Brigade
+                val isRepentant = checkbox.isChecked
 
-            listener.onAddStudent(Student(name, lastName, group.id, isRepentant))
+                listener.onAddStudentInteraction(
+                    Student(name, lastName, group.id, isRepentant),
+                    false
+                )
+            } else {
+                student.name = nameTextView.text.toString()
+                student.lastName = lastNameTextView.text.toString()
+                student.isRepentant = checkbox.isChecked
+                listener.onAddStudentInteraction(student, true)
+            }
 
             this@AddStudentBottomSheetDialog.dismiss()
         }
@@ -48,9 +71,17 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
         fun newInstance(listener: AddStudentListener, value: List<Brigade>): AddStudentBottomSheetDialog {
             return AddStudentBottomSheetDialog(listener, value)
         }
+
+        fun newInstance(listener: AddStudentListener): AddStudentBottomSheetDialog {
+            return AddStudentBottomSheetDialog(listener)
+        }
+
+        fun newInstance(listener: AddStudentListener, studentP: Student): AddStudentBottomSheetDialog {
+            return AddStudentBottomSheetDialog(listener, student = studentP)
+        }
     }
 
-    inner class BrigadesSpinnerAdapter(private val context: Context, brigades: List<Brigade>) : SpinnerAdapter {
+    inner class BrigadesSpinnerAdapter(private val context: Context) : SpinnerAdapter {
 
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val view =  if (convertView == null) {
@@ -59,13 +90,14 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
             } else
                 convertView
 
-            view.brigadeNameTextView.text = brigades[position].name
-
+            brigades?.let {
+                view.brigadeNameTextView.text = it[position].name
+            }
             return view
         }
 
         override fun isEmpty(): Boolean {
-            return brigades.isEmpty()
+            return brigades?.isEmpty() ?: true
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -75,8 +107,9 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
             } else
                 convertView
 
-            view.brigadeNameTextView.text = brigades[position].name
-
+            brigades?.let {
+                view.brigadeNameTextView.text = it[position].name
+            }
             return view
         }
 
@@ -84,8 +117,8 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
             return position
         }
 
-        override fun getItem(position: Int): Any {
-            return brigades[position]
+        override fun getItem(position: Int): Brigade? {
+            return brigades?.get(position)
         }
 
         override fun getItemId(position: Int): Long {
@@ -93,7 +126,7 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
         }
 
         override fun getCount(): Int {
-            return brigades.count()
+            return brigades?.count() ?: 0
         }
 
         override fun hasStableIds(): Boolean {

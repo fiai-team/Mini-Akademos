@@ -79,8 +79,10 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
         return root
     }
 
-    override fun onAddStudent(student: Student) {
-        viewModel.addStudent(student)
+    override fun onAddStudentInteraction(student: Student, isEditionOperation: Boolean) {
+        if (!isEditionOperation) {
+            viewModel.addStudent(student)
+        }
     }
 
     private fun toggleTabsUiVisibility(show: Boolean) {

@@ -17,9 +17,10 @@ import kotlinx.android.synthetic.main.fragment_studentsbybrigade.*
 import kotlinx.android.synthetic.main.recyclerviewitem_studentsbybrigade.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Student
+import uci.fiai.miniakd.dialogs.addstudent.AddStudentBottomSheetDialog
 import uci.fiai.miniakd.extensions.showUndoSnackbar
 
-class StudentsByBrigadeListFragment : Fragment() {
+class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.AddStudentListener {
 
     private lateinit var viewModel: StudentsByBrigadeViewModel
 
@@ -40,8 +41,13 @@ class StudentsByBrigadeListFragment : Fragment() {
                 recyclerView.adapter = StudentsByBrigadeAdapter(context!!, it)
             }
         })
-
         return root
+    }
+
+    override fun onAddStudentInteraction(student: Student, isEditionOperation: Boolean) {
+        if (isEditionOperation) {
+            viewModel.saveEditStudent(student)
+        }
     }
 
     fun onStudentItemLongInteraction(obj: Student, position: Int): Boolean {
@@ -67,7 +73,7 @@ class StudentsByBrigadeListFragment : Fragment() {
     }
 
     private fun showDialogEditStudent(obj: Student) {
-
+        AddStudentBottomSheetDialog.newInstance(this, obj).show(fragmentManager!!, AddStudentBottomSheetDialog.TAG)
     }
 
     private fun showDialogDeleteStudent(student: Student, position: Int) {
@@ -97,7 +103,6 @@ class StudentsByBrigadeListFragment : Fragment() {
                         }
                     }
 
-                    //viewModel.markToRemove(student, position)
                     recyclerView.adapter?.let { adapter ->
                         (adapter as StudentsByBrigadeAdapter).removeItem(position);
                     }

@@ -15,6 +15,13 @@ abstract class MainDatabase : RoomDatabase() {
     abstract fun students(): StudentsDao
 
     abstract fun brigades(): BrigadeDao
+    fun removeStudent(context: Context, student: Student) {
+        TODO("aasdasda")
+    }
+
+    fun saveStudent(context: Context, student: Student) {
+
+    }
 
     companion object {
         private const val DATABASE_NAME = "MainDatabase"
