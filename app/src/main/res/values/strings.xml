@@ -29,5 +29,11 @@
     <string name="student_count_plural">%d estudiantes</string>
     <string name="string_yes">Sí</string>
     <string name="empty_brigades">No hay brigadas registradas</string>
+    <string name="title_activity_brigade_details">BrigadeDetailsActivity</string>
+    <string name="string_edit_group">Editar brigada</string>
+    <string name="string_delete_group">Eliminar brigada</string>
+    <string name="string_delete_group_with_name">Eliminar brigada %s</string>
+    <string name="string_delete_group_text">¿Desea eliminar la brigada junto con todos sus estudiantes?</string>
+    <string name="students_count_empty">Sin estudiantes</string>
 
 </resources>

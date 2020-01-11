@@ -21,8 +21,7 @@ abstract class MainDatabase : RoomDatabase() {
         private var instance: MainDatabase? = null
         fun instance(context: Context): MainDatabase {
             if (instance == null) {
-                instance =
-                    Room.databaseBuilder(context, MainDatabase::class.java, DATABASE_NAME).build()
+                instance = Room.databaseBuilder(context, MainDatabase::class.java, DATABASE_NAME).build()
             }
             return instance as MainDatabase
         }

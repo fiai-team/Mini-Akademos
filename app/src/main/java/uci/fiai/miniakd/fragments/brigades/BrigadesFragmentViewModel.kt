@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
@@ -12,11 +13,11 @@ import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 class BrigadesFragmentViewModel(application: Application) : AndroidViewModel(application), AndroidViewModelListener {
 
     //region Mutable fields
-    private val _brigadesList = MutableLiveData<List<Brigade>>()
+    private val _brigadesList = MutableLiveData<ArrayList<Brigade>>()
     //endregion
 
     //region LiveData
-    val brigadesList: LiveData<List<Brigade>> = _brigadesList
+    val brigadesList: LiveData<ArrayList<Brigade>> = _brigadesList
     //endregion
 
     init {
@@ -31,16 +32,21 @@ class BrigadesFragmentViewModel(application: Application) : AndroidViewModel(app
         when(taskName) {
             LoadBrigadesAsyncTask::class.qualifiedName -> {
                 _brigadesList.apply {
-                    this.value = result as List<Brigade>
+                    this.value = result as ArrayList<Brigade>
                 }
             }
         }
     }
 
-
-    private fun update() {
+    fun update() {
         val task1 = LoadBrigadesAsyncTask(this)
         task1.execute(true)
     }
 
+    fun removeBrigade(brigade: Brigade) {
+        Thread {
+            MainDatabase.instance(context()).brigades().delete(brigade)
+            update()
+        }.start()
+    }
 }

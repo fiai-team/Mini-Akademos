@@ -32,7 +32,7 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(StudentsFragmentViewModel::class.java)
-        val root =  inflater.inflate(R.layout.fragment_students, container, false)
+        val root =  inflater.inflate(R.layout.fragment_students, container, false) as RelativeLayout
 
         val speedDialView = root.findViewById<SpeedDialView>(R.id.speedDial)
         speedDialView.inflate(R.menu.students_speeddial)
@@ -45,12 +45,13 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
         viewModel.brigadesList.observe(this, Observer { it ->
             if (it.isEmpty()) {
                 toggleTabsUiVisibility(false)
-                val emptyFragment = inflater.inflate(R.layout.fragment_empty, (root as RelativeLayout), false)
+                val emptyFragment = inflater.inflate(R.layout.fragment_empty, root, false)
                 emptyFragment.emptyDescriptionTextView.text = getString(R.string.empty_brigades)
                 root.addView(emptyFragment)
             } else {
                 toggleTabsUiVisibility(true)
-                (root as RelativeLayout).removeView(emptyLayoutRoot)
+                val emptyLayout =  root.findViewById<RelativeLayout>(R.id.emptyLayoutRoot)
+                view?.findViewById<RelativeLayout>(R.id.studentsFragmentParentLayout)?.removeView(emptyLayout)
                 fragmentManager?.let {
                     val adapter = FragmentViewPagerAdapter(it)
                     viewPager.adapter = adapter
@@ -93,7 +94,6 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 .title(R.string.string_add_student)
                 .iconRes(R.drawable.ic_person_add)
                 .iconAttr(R.attr.dialogIcon)
-                .cancelable(false)
                 .content(R.string.string_add_group_first)
                 .positiveText(R.string.positive_string)
                 .negativeText(R.string.negative)
@@ -108,7 +108,6 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
             MaterialDialog.Builder(it)
                 .title(R.string.string_add_group)
                 .iconRes(R.drawable.ic_people)
-                .cancelable(false)
                 .positiveText(R.string.string_add)
                 .negativeText(R.string.string_cancel)
                 .positiveColorRes(R.color.colorPrimary)

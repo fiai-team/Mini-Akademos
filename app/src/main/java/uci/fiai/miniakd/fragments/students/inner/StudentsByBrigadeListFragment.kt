@@ -55,15 +55,12 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
             MaterialDialog.Builder(it)
                 .title(obj.name + " " + obj.lastName)
                 .iconRes(R.drawable.ic_edit)
-                .cancelable(false)
                 .content("¿Qué desea hacer con el estudiante?")
                 .contentColorRes(R.color.colorPrimary)
                 .positiveText(R.string.string_edit)
                 .negativeText(R.string.string_remove)
-                .neutralText("Nada")
                 .positiveColorRes(R.color.colorAccent)
                 .negativeColorRes(R.color.colorPrimary)
-                .neutralColorRes(R.color.colorPrimaryDark)
                 .onPositive { _, _ -> showDialogEditStudent(obj) }
                 .onNegative { _, _ -> showDialogDeleteStudent(obj, position) }
                 .show()
@@ -81,7 +78,6 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
             MaterialDialog.Builder(it)
                 .title(R.string.string_delete_student)
                 .iconRes(R.drawable.ic_delete)
-                .cancelable(false)
                 .content("¿Seguro que quiere eliminar al estudiante ${student.name} ${student.lastName}?")
                 .contentColorRes(R.color.colorPrimary)
                 .positiveText(R.string.string_yes)
@@ -105,10 +101,9 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
                     }
 
                     recyclerView.adapter?.let { adapter ->
-                        (adapter as StudentsByBrigadeAdapter).removeItem(position);
+                        (adapter as StudentsByBrigadeAdapter).removeItem(position)
                     }
                     showUndoSnackbar("Estudiante eliminado", action, callback)
-
                 }
                 .show()
         } ?: recyclerView.adapter?.notifyItemChanged(position)
@@ -143,7 +138,6 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
             students.add(position, student)
             notifyItemInserted(position)
         }
-
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val nameTextView: TextView = itemView.nameTextView
