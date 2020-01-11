@@ -25,7 +25,7 @@ import uci.fiai.miniakd.dialogs.addstudent.AddStudentBottomSheetDialog
 import uci.fiai.miniakd.fragments.students.inner.StudentsByBrigadeListFragment
 import uci.fiai.miniakd.utils.snackBar
 
-class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, AddStudentBottomSheetDialog.AddStudentListener {
+class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, AddStudentBottomSheetDialog.AddStudentListener, TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
 
     private lateinit var viewModel: StudentsFragmentViewModel
     private var currentIndex = 0
@@ -38,38 +38,19 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
         speedDialView.inflate(R.menu.students_speeddial)
         speedDialView.setOnActionSelectedListener(this)
 
-        val tabListener = object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                if (!speedDialView.isShown) speedDialView.show()
-                currentIndex = tab.position
-            }
-        }
-
         with(root.findViewById<TabLayout>(R.id.brigadesTabLayout)) {
             this.setupWithViewPager(root.findViewById(R.id.viewPager))
-            this.addOnTabSelectedListener(tabListener)
+            this.addOnTabSelectedListener(this@StudentsFragment)
         }
-
-        viewModel.studentsList.observe(this, Observer {
-            if (it.isEmpty()) {
-                val emptyFragment = inflater.inflate(R.layout.fragment_empty, (root as RelativeLayout), false)
-                emptyFragment.emptyDescriptionTextView.text = getString(R.string.empty_students)
-                root.addView(emptyFragment)
-            } else {
-                (root as RelativeLayout).removeView(emptyLayoutRoot)
-            }
-        })
         viewModel.brigadesList.observe(this, Observer { it ->
             if (it.isEmpty()) {
                 toggleTabsUiVisibility(false)
+                val emptyFragment = inflater.inflate(R.layout.fragment_empty, (root as RelativeLayout), false)
+                emptyFragment.emptyDescriptionTextView.text = getString(R.string.empty_brigades)
+                root.addView(emptyFragment)
             } else {
                 toggleTabsUiVisibility(true)
+                (root as RelativeLayout).removeView(emptyLayoutRoot)
                 fragmentManager?.let {
                     val adapter = FragmentViewPagerAdapter(it)
                     viewPager.adapter = adapter
@@ -79,23 +60,33 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
         return root
     }
 
+    override fun onTabReselected(p0: TabLayout.Tab?) {
+    }
+
+    override fun onTabUnselected(p0: TabLayout.Tab?) {
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        if (!speedDial.isShown)
+            speedDial.show()
+        tab?.let {
+            currentIndex = it.position
+        }
+    }
     override fun onAddStudentInteraction(student: Student, isEditionOperation: Boolean) {
         if (!isEditionOperation) {
             viewModel.addStudent(student)
         }
     }
-
     private fun toggleTabsUiVisibility(show: Boolean) {
         if (show) {
             brigadesTabLayout.visibility = View.VISIBLE
             viewPager.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             brigadesTabLayout.visibility = View.GONE
             viewPager.visibility = View.GONE
         }
     }
-
     private fun showDialog() {
         activity?.let {
             MaterialDialog.Builder(context!!)
@@ -112,7 +103,6 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 .show()
         }
     }
-
     private fun showDialogAddBrigade() {
         activity?.let {
             MaterialDialog.Builder(it)

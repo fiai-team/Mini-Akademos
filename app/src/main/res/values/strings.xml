@@ -28,5 +28,6 @@
     <string name="student_count_singular">%d estudiante</string>
     <string name="student_count_plural">%d estudiantes</string>
     <string name="string_yes">Sí</string>
+    <string name="empty_brigades">No hay brigadas registradas</string>
 
 </resources>
