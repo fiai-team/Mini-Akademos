@@ -91,6 +91,7 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
                 .onPositive { _, _ ->
                     var canDelete = true
                     val action = View.OnClickListener {
+                        canDelete = false
                         recyclerView.adapter?.let { adapter ->
                             (adapter as StudentsByBrigadeAdapter).restoreItem(student, position)
                         }
