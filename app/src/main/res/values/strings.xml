@@ -35,5 +35,9 @@
     <string name="string_delete_group_with_name">Eliminar brigada %s</string>
     <string name="string_delete_group_text">¿Desea eliminar la brigada junto con todos sus estudiantes?</string>
     <string name="students_count_empty">Sin estudiantes</string>
+    <string name="subjects_header">Asignaturas</string>
+    <string name="brigades_header">Brigadas</string>
+    <string name="students_header">Estudiantes</string>
+    <string name="emptyTurns">No hay turnos registrados para el %s</string>
 
 </resources>

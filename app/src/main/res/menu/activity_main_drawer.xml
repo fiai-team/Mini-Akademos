@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="@layout/nav_header_main">
 
     <group
         android:id="@+id/sectionsGroup"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_students"
             android:icon="@drawable/ic_person"
-            android:title="Estudiantes" />
+            android:title="@string/students_header" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_brigades"
             android:icon="@drawable/ic_people"
-            android:title="Brigadas" />
+            android:title="@string/brigades_header" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_subjects"
+            android:icon="@drawable/ic_book"
+            android:title="@string/subjects_header" />
+        <item
+            android:id="@+id/nav_evaluations"
             android:icon="@drawable/ic_content_paste"
             android:title="Evaluaciones" />
         <item

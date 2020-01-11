@@ -3,22 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_turns">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_students"
         android:name="uci.fiai.miniakd.fragments.students.StudentsFragment"
-        android:label="Estudiantes"
+        android:label="@string/students_header"
         tools:layout="@layout/fragment_students" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_brigades"
         android:name="uci.fiai.miniakd.fragments.brigades.BrigadesFragment"
-        android:label="Brigadas"
+        android:label="@string/brigades_header"
         tools:layout="@layout/fragments_brigades" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_subjects"
+        android:name="uci.fiai.miniakd.fragments.subjects.SubjectsFragment"
+        android:label="@string/subjects_header"
+        tools:layout="@layout/fragment_subjects" />
+
+    <fragment
+        android:id="@+id/nav_evaluations"
         android:name="uci.fiai.miniakd.fragments.settings.SettingsFragment"
         android:label="Evaluaciones"
         tools:layout="@layout/fragment_evaluations" />
