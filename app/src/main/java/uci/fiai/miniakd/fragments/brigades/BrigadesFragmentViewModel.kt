@@ -10,7 +10,7 @@ import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 
-class BrigadesFragmentViewModel(application: Application) : AndroidViewModel(application), AndroidViewModelListener {
+class BrigadesFragmentViewModel(application: Application) : AndroidViewModelListener(application) {
 
     //region Mutable fields
     private val _brigadesList = MutableLiveData<ArrayList<Brigade>>()
@@ -45,7 +45,7 @@ class BrigadesFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun removeBrigade(brigade: Brigade) {
         Thread {
-            MainDatabase.instance(context()).brigades().delete(brigade)
+            MainDatabase.instance(context()).brigades.delete(brigade)
             update()
         }.start()
     }

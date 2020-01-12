@@ -47,13 +47,13 @@ class BrigadesFragment : Fragment() {
                 .negativeText(R.string.string_remove)
                 .positiveColorRes(R.color.colorAccent)
                 .negativeColorRes(R.color.colorPrimary)
-                .onPositive { _, _ -> showDialogEditGroup(brigade, position) }
+                .onPositive { _, _ -> showDialogEditGroup(brigade) }
                 .onNegative { _, _ -> showDialogDeleteGroup(brigade, position) }
                 .show()
         }
     }
 
-    private fun showDialogEditGroup(brigade: Brigade, position: Int) {
+    private fun showDialogEditGroup(brigade: Brigade) {
         activity?.let {
             MaterialDialog.Builder(it)
                 .title(R.string.string_edit_group)
@@ -69,7 +69,7 @@ class BrigadesFragment : Fragment() {
 
                     context?.let {
                         Thread {
-                            MainDatabase.instance(it).brigades().update(brigade)
+                            MainDatabase.instance(it).brigades.update(brigade)
                             viewModel.update()
                             view?.let { v -> snackbar(v, "Brigada editada") }
                         }.start()

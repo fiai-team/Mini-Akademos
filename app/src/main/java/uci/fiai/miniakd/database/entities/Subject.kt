@@ -11,6 +11,7 @@ class Subject() {
     var id: Int = 0
     var name: String = String.empty
     var hoursCount: Int = 0
+    var period = 0
     var doneHoursCount: Int = 0
     var hasPartialsExams: Boolean = true
     var hasFinalExam: Boolean = true

@@ -5,7 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.subjects.SubjectsFragment">
+    android:orientation="vertical"
+    tools:context=".fragments.turns.TurnsFragment">
+
+    <com.github.badoualy.datepicker.DatePickerTimeline
+        android:id="@+id/turnsDatePickerTimeline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:mti_bgLblDateSelectedColor="?android:attr/colorPrimary"
+        app:mti_bgLblTodayColor="?android:attr/colorAccent"
+        app:mti_ringLblDateSelectedColor="?android:attr/colorPrimary"
+        app:mti_followScroll="false"/>
+
+
+    <TextView
+        android:id="@+id/emptyTurnsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 
     <com.leinardi.android.speeddial.SpeedDialOverlayLayout
@@ -25,5 +43,7 @@
         android:layout_marginBottom="15dp"
         app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
         app:sdOverlayLayout="@id/speedDialOverlayLayout"/>
+
+
 
 </RelativeLayout>

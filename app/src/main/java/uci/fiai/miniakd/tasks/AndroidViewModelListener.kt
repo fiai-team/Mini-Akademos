@@ -1,11 +1,11 @@
 package uci.fiai.miniakd.tasks
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 
-interface AndroidViewModelListener {
+abstract class AndroidViewModelListener(application: Application) : AndroidViewModel(application) {
 
-    fun context(): Context
-
-
-    fun onTaskFinished(result: List<Any>, taskName: String)
+    abstract fun context(): Context
+    abstract fun onTaskFinished(result: List<Any>, taskName: String)
 }

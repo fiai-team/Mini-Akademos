@@ -39,5 +39,15 @@
     <string name="brigades_header">Brigadas</string>
     <string name="students_header">Estudiantes</string>
     <string name="emptyTurns">No hay turnos registrados para el %s</string>
+    <string name="today_header">Hoy</string>
+    <string name="new_subject_header">Nueva asigantura</string>
+    <string name="name_field_hint">Nombre</string>
+    <string name="addButtonText">Añadir</string>
+    <string name="newSubjectHeader">Nueva asignatura</string>
+
+    <string-array name="periodsNamesArray">
+        <item>Primer semestre</item>
+        <item>Segundo semestre</item>
+    </string-array>
 
 </resources>

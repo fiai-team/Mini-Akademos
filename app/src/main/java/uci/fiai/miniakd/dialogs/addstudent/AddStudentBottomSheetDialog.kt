@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.SpinnerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottomsheetdialog_addstudent.*
+import kotlinx.android.synthetic.main.bottomsheetdialog_addstudent.spinner
 import kotlinx.android.synthetic.main.bottomsheetdialog_addstudent.view.*
 import kotlinx.android.synthetic.main.spinneritem_brigade.view.*
 import uci.fiai.miniakd.R
-import uci.fiai.miniakd.database.entities.Brigade
-import uci.fiai.miniakd.database.entities.Student
+import uci.fiai.miniakd.database.entities.*
 
 class AddStudentBottomSheetDialog(private var listener: AddStudentListener, private val brigades: List<Brigade>? = null, private val student: Student? = null) : BottomSheetDialogFragment() {
 
@@ -77,7 +77,10 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
         }
 
         fun newInstance(listener: AddStudentListener, studentP: Student): AddStudentBottomSheetDialog {
-            return AddStudentBottomSheetDialog(listener, student = studentP)
+            return AddStudentBottomSheetDialog(
+                listener,
+                student = studentP
+            )
         }
     }
 

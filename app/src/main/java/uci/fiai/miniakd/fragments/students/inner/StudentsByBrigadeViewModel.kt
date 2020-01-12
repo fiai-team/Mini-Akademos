@@ -13,7 +13,7 @@ import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 import uci.fiai.miniakd.tasks.LoadStudentsByBrigadeAsyncTask
 
-class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(application), AndroidViewModelListener {
+class StudentsByBrigadeViewModel (application: Application) : AndroidViewModelListener(application) {
 
     private var brigadeArg: Int = 0
     //region Mutable Fields
@@ -52,14 +52,14 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModel(a
 
     fun removeStudent(student: Student) {
         Thread {
-            MainDatabase.instance(context()).students().delete(student)
+            MainDatabase.instance(context()).students.delete(student)
             update()
         }.start()
     }
 
     fun saveEditStudent(student: Student) {
         Thread {
-            MainDatabase.instance(context()).students().update(student)
+            MainDatabase.instance(context()).students.update(student)
             update()
         }.start()
     }

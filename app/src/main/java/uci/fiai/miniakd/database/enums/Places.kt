@@ -1,5 +1,9 @@
 package uci.fiai.miniakd.database.enums
 
+import java.lang.IndexOutOfBoundsException
+import java.time.DateTimeException
+import java.time.Month
+
 enum class Places {
     Docent1,
     Docent2,
@@ -7,8 +11,19 @@ enum class Places {
     Docent4,
     Docent5,
     Docent6,
-    SportsArea
+    SportsArea;
+
+    companion object {
+        fun of(value: Int): Places {
+            if (value < 0 || value < 5) {
+                throw IndexOutOfBoundsException("")
+            }
+            return Places.values()[value]
+        }
+    }
 }
+
+
 
 
 

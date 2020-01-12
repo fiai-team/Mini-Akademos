@@ -12,7 +12,7 @@ import uci.fiai.miniakd.database.entities.Student
 import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 
-class StudentsFragmentViewModel(application: Application) : AndroidViewModel(application), AndroidViewModelListener {
+class StudentsFragmentViewModel(application: Application) : AndroidViewModelListener(application) {
 
     //region Mutable Fields
     private var _brigadesList = MutableLiveData<List<Brigade>>().apply {
@@ -47,7 +47,7 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModel(app
 
     fun addBrigade(name: String) {
         val thread = Thread {
-            MainDatabase.instance(context()).brigades().insertAll(Brigade(name))
+            MainDatabase.instance(context()).brigades.insertAll(Brigade(name))
             update()
         }
         thread.start()

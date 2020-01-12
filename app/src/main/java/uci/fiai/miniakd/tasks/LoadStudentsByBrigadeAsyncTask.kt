@@ -8,8 +8,8 @@ class LoadStudentsByBrigadeAsyncTask(private val listener: AndroidViewModelListe
 
     override fun doInBackground(vararg params: Int?): List<Student>? {
         return when {
-            params.isEmpty() -> MainDatabase.instance(listener.context()).students().getAll()
-            params.size == 1 -> MainDatabase.instance(listener.context()).students().getAllByBrigade(params[0]!!)
+            params.isEmpty() -> MainDatabase.instance(listener.context()).students.getAll()
+            params.size == 1 -> MainDatabase.instance(listener.context()).students.getAllByBrigade(params[0]!!)
             else -> ArrayList(0)
         }
     }

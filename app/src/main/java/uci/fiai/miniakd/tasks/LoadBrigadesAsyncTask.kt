@@ -10,17 +10,17 @@ class LoadBrigadesAsyncTask(private val listener: AndroidViewModelListener) : As
     override fun doInBackground(vararg params: Boolean?): List<Brigade> {
         when (params.size) {
             0 -> {
-                return MainDatabase.instance(listener.context()).brigades().getAll()
+                return MainDatabase.instance(listener.context()).brigades.getAll()
             }
             1 -> {
-                val brigades =  MainDatabase.instance(listener.context()).brigades().getAll()
+                val brigades =  MainDatabase.instance(listener.context()).brigades.getAll()
                 for (brigade in brigades) {
-                    brigade.studentsCount = MainDatabase.instance(listener.context()).brigades().getStudentsByBrigadeId(brigade.id).count()
+                    brigade.studentsCount = MainDatabase.instance(listener.context()).brigades.getStudentsByBrigadeId(brigade.id).count()
                 }
                 return brigades
             }
         }
-        return MainDatabase.instance(listener.context()).brigades().getAll()
+        return MainDatabase.instance(listener.context()).brigades.getAll()
     }
 
     override fun onPostExecute(result: List<Brigade>?) {

@@ -7,5 +7,5 @@ fun addStudent(
     context: Context,
     student: Student
 ) {
-    MainDatabase.instance(context).students().insertAll(student)
+    MainDatabase.instance(context).students.insertAll(student)
 }

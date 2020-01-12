@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_turns">
+    app:startDestination="@+id/nav_subjects">
 
     <fragment
         android:id="@+id/nav_students"
@@ -39,7 +39,7 @@
         android:id="@+id/nav_turns"
         android:name="uci.fiai.miniakd.fragments.turns.TurnsFragment"
         android:label="Turnos"
-        tools:layout="@layout/turns_fragment" />
+        tools:layout="@layout/fragment_turns" />
 
     <fragment
         android:id="@+id/nav_share"

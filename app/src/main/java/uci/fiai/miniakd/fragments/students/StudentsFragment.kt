@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.tabs.TabLayout
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
-import kotlinx.android.synthetic.main.fragment_empty.*
 import kotlinx.android.synthetic.main.fragment_empty.view.*
 import kotlinx.android.synthetic.main.fragment_students.*
 import uci.fiai.miniakd.R

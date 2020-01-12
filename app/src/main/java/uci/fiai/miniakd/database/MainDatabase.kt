@@ -1,20 +1,20 @@
 package uci.fiai.miniakd.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import uci.fiai.miniakd.database.dao.BrigadeDao
-import uci.fiai.miniakd.database.dao.StudentsDao
-import uci.fiai.miniakd.database.entities.Brigade
-import uci.fiai.miniakd.database.entities.Student
+import androidx.room.*
+import uci.fiai.miniakd.database.dao.*
+import uci.fiai.miniakd.database.entities.*
 
-@Database(entities = [Student::class, Brigade::class], version = 1)
+@Database(entities = [Student::class, Brigade::class, Subject::class, Turn::class], version = 1)
 abstract class MainDatabase : RoomDatabase() {
 
-    abstract fun students(): StudentsDao
+    abstract val students : StudentsDao
 
-    abstract fun brigades(): BrigadeDao
+    abstract val brigades: BrigadeDao
+
+    abstract val turns : TurnDao
+
+    abstract val subjects: SubjectDao
 
     companion object {
         private const val DATABASE_NAME = "MainDatabase"
