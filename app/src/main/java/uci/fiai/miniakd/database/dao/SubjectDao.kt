@@ -12,4 +12,10 @@ interface SubjectDao {
     @Update
     fun update(subject: Subject)
 
+    @Query("SELECT * FROM Subject")
+    fun getAll() : List<Subject>
+
+    @Delete
+    fun delete(subject: Subject)
+
 }

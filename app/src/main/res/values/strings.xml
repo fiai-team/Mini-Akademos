@@ -44,6 +44,9 @@
     <string name="name_field_hint">Nombre</string>
     <string name="addButtonText">Añadir</string>
     <string name="newSubjectHeader">Nueva asignatura</string>
+    <string name="deletedSubjectMessage">Asignatura eliminada</string>
+    <string name="saveAction">Guardar</string>
+    <string name="addAction">Añadir</string>
 
     <string-array name="periodsNamesArray">
         <item>Primer semestre</item>

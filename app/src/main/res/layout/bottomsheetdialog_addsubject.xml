@@ -83,7 +83,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hasFinalExamCheckBox"
         style="@style/BottomSheetDialogPositiveActionButton"
-        android:textColor="@android:color/white"
-        android:text="@string/addButtonText"/>
+        android:textColor="@android:color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

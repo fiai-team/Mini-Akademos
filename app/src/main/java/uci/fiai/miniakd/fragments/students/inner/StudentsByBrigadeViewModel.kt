@@ -17,9 +17,7 @@ class StudentsByBrigadeViewModel (application: Application) : AndroidViewModelLi
 
     private var brigadeArg: Int = 0
     //region Mutable Fields
-    private var _studentsList = MutableLiveData<ArrayList<Student>>().apply {
-        this.value = ArrayList(0)
-    }
+    private var _studentsList = MutableLiveData<ArrayList<Student>>()
     //endregion
 
     //region LiveData Properties

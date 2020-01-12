@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments.subjects.SubjectsFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:spanCount="2"
+        tools:context=".fragment.CoursesFragment"
+        tools:listitem="@layout/recyclerviewitem_subject"/>
 
     <com.leinardi.android.speeddial.SpeedDialOverlayLayout
         android:id="@+id/speedDialOverlayLayout"

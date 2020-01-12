@@ -15,9 +15,7 @@ import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 class StudentsFragmentViewModel(application: Application) : AndroidViewModelListener(application) {
 
     //region Mutable Fields
-    private var _brigadesList = MutableLiveData<List<Brigade>>().apply {
-        this.value = ArrayList(0)
-    }
+    private var _brigadesList = MutableLiveData<List<Brigade>>()
     //endregion
 
     val brigadesList: LiveData<List<Brigade>> = _brigadesList

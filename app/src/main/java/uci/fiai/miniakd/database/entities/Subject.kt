@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import uci.fiai.miniakd.extensions.*
 
-
+//TODO: Change tableName to TSubject
 @Entity(tableName = "Subject")
 class Subject() {
     @PrimaryKey(autoGenerate = true)

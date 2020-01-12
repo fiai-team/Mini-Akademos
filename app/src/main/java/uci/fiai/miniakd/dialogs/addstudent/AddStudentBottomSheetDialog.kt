@@ -36,7 +36,10 @@ class AddStudentBottomSheetDialog(private var listener: AddStudentListener, priv
             view.nameTextView.setText(student.name)
             view.lastNameTextView.setText(student.lastName)
             view.checkbox.isChecked = student.isRepentant
-        }
+
+            view.addStudentButton.setText(R.string.saveAction)
+        } else
+            view.addStudentButton.setText(R.string.addAction)
         return view
     }
 

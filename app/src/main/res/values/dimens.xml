@@ -9,4 +9,5 @@
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="iconImageViewDimention">45dp</dimen>
 </resources>
