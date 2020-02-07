@@ -47,6 +47,7 @@
     <string name="deletedSubjectMessage">Asignatura eliminada</string>
     <string name="saveAction">Guardar</string>
     <string name="addAction">Añadir</string>
+    <string name="notRegisteredBrigadesText">No hay brigadas registradas</string>
 
     <string-array name="periodsNamesArray">
         <item>Primer semestre</item>

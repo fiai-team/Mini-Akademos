@@ -44,11 +44,10 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModelList
     }
 
     fun addBrigade(name: String) {
-        val thread = Thread {
+        Thread {
             MainDatabase.instance(context()).brigades.insertAll(Brigade(name))
             update()
-        }
-        thread.start()
+        }.start()
     }
 
     private fun update() {

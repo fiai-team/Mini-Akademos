@@ -11,7 +11,7 @@
         android:id="@+id/recyclerView"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    <include layout="@layout/fragment_empty"
+    <include layout="@layout/layout_empty"
         android:id="@+id/emptyLayoutInclude"
         android:visibility="gone"/>
 

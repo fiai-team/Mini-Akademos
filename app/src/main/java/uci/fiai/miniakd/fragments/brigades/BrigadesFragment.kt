@@ -14,14 +14,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.leinardi.android.speeddial.SpeedDialView
 import kotlinx.android.synthetic.main.fragments_brigades.*
 import kotlinx.android.synthetic.main.recyclerviewitem_brigade.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
+import uci.fiai.miniakd.dialogs.MaterialDialogManager
 import uci.fiai.miniakd.extensions.*
+import uci.fiai.miniakd.utils.snackBar
 
-class BrigadesFragment : Fragment() {
+class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
     private lateinit var viewModel: BrigadesFragmentViewModel
 
@@ -29,11 +33,56 @@ class BrigadesFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(BrigadesFragmentViewModel::class.java)
         val root = inflater.inflate(R.layout.fragments_brigades, container, false)
 
+        val speedDialView = root.findViewById<SpeedDialView>(R.id.speedDial)
+        speedDialView.inflate(R.menu.brigades_speeddial)
+        speedDialView.setOnActionSelectedListener(this)
+
+        root.findViewById<TextView>(R.id.emptyDescriptionTextView).setText(R.string.notRegisteredBrigadesText)
+
         viewModel.brigadesList.observe(this, Observer {
-            if (context != null)
-                recyclerView.adapter = BrigadesRecyclerViewAdapter(context!!, it)
+            if (it.isEmpty()) {
+                toggleUiVisibility()
+            } else {
+                toggleUiVisibility()
+                context?.let { context ->
+                    recyclerView.adapter = BrigadesRecyclerViewAdapter(context, it)
+                }
+            }
         })
         return root
+    }
+
+    override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
+        when (actionItem?.id) {
+            R.id.addBrigadeItem -> {
+                showDialogAddBrigade()
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun showDialogAddBrigade() {
+        activity?.let {
+            MaterialDialogManager(it).showDialogAddBrigade { _, input ->
+                viewModel.addBrigade(input.toString())
+                view?.let { v ->
+                    snackBar(v, "Brigada $input agregada", false)
+                }
+            }
+        }
+    }
+
+    private fun toggleUiVisibility() {
+        if (recyclerView.visibility == View.VISIBLE)
+            recyclerView.visibility = View.GONE
+        else
+            recyclerView.visibility = View.VISIBLE
+
+        if (emptyLayoutInclude.visibility == View.VISIBLE)
+            emptyLayoutInclude.visibility = View.GONE
+        else
+            emptyLayoutInclude.visibility = View.VISIBLE
     }
 
     fun onItemLongClickInteraction(brigade: Brigade, position: Int) {
@@ -83,36 +132,28 @@ class BrigadesFragment : Fragment() {
 
     private fun showDialogDeleteGroup(brigade: Brigade, position: Int) {
         activity?.let {
-            MaterialDialog.Builder(it)
-                .title(getString(R.string.string_delete_group_with_name, brigade.name))
-                .content(R.string.string_delete_group_text)
-                .contentColor(getPrimaryColor(it))
-                .positiveText(R.string.string_delete_group)
-                .negativeText(R.string.string_no_delete)
-                .positiveColor(getAccentColor(it))
-                .negativeColorRes(R.color.colorPrimaryDark)
-                .onPositive { _, _ ->
-                    var canDelete = true
-                    val action = View.OnClickListener {
-                        recyclerView.adapter?.let { adapter ->
-                            canDelete = false
-                            (adapter as BrigadesRecyclerViewAdapter).restoreItem(brigade, position)
-                        }
-                    }
-                    val callback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            super.onDismissed(transientBottomBar, event)
-
-                            if (canDelete) viewModel.removeBrigade(brigade)
-                        }
-                    }
-
+            MaterialDialogManager(it).showDialogDeleteBrigade(brigade) {
+                var canDelete = true
+                val action = View.OnClickListener {
                     recyclerView.adapter?.let { adapter ->
-                        (adapter as BrigadesRecyclerViewAdapter).removeItem(position);
+                        canDelete = false
+                        (adapter as BrigadesRecyclerViewAdapter).restoreItem(brigade, position)
                     }
-                    showUndoSnackbar("Brigada eliminada", action, callback)
                 }
-                .show()
+                val callback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+
+                        if (canDelete) viewModel.removeBrigade(brigade)
+                    }
+                }
+
+                recyclerView.adapter?.let { adapter ->
+                    (adapter as BrigadesRecyclerViewAdapter).removeItem(position);
+                }
+                showUndoSnackbar("Brigada eliminada", action, callback)
+            }
+
         }
     }
 

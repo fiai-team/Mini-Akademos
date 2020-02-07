@@ -49,4 +49,11 @@ class BrigadesFragmentViewModel(application: Application) : AndroidViewModelList
             update()
         }.start()
     }
+
+    fun addBrigade(name: String) {
+        Thread {
+            MainDatabase.instance(context()).brigades.insertAll(Brigade(name))
+            update()
+        }.start()
+    }
 }
