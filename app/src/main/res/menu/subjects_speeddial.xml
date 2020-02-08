@@ -3,6 +3,6 @@
 
     <item android:id="@+id/addSubjectItem"
         android:title="@string/newSubjectHeader"
-        android:icon="@drawable/ic_add"/>
+        android:icon="@drawable/ic_book"/>
 
 </menu>

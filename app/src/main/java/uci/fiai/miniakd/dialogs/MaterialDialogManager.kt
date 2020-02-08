@@ -2,10 +2,17 @@ package uci.fiai.miniakd.dialogs
 
 import android.content.Context
 import android.text.InputType
+import android.view.View
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.*
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_subjects.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Brigade
+import uci.fiai.miniakd.database.entities.Subject
 import uci.fiai.miniakd.extensions.*
+import uci.fiai.miniakd.fragments.subjects.SubjectsFragment
 
 class MaterialDialogManager(private val context: Context) {
 
@@ -55,5 +62,39 @@ class MaterialDialogManager(private val context: Context) {
                 onCallBack()
             }
             .show()
+    }
+
+    fun showSubjectOptionsDialog(subject: Subject, position: Int, onPositive: (subject: Subject) -> Unit, onNegative: (subject: Subject, position: Int) -> Unit) {
+        MaterialDialog.Builder(context)
+            .title(subject.name)
+            .iconRes(R.drawable.ic_edit)
+            .content("¿Qué desea hacer con la asignatura?")
+            .contentColor(getPrimaryColor(context))
+            .positiveText(R.string.string_edit)
+            .negativeText(R.string.string_remove)
+            .positiveColor(getAccentColor(context))
+            .negativeColor(getPrimaryColor(context))
+            .onPositive { _, _ -> onPositive(subject) }
+            .onNegative { _, _ -> onNegative(subject, position) }
+            .show()
+    }
+    fun showSubjectDeleteConfirmationDialog(subject: Subject, onCallBack: () -> Unit) {
+        MaterialDialog.Builder(context)
+            .title("${getString(R.string.string_delete_course)} ${subject.name}")
+            .content("¿Desea eliminar la asignatura \"${subject.name}\"? También eliminará los turnos asociados.")
+            .contentColor(getPrimaryColor(context))
+            .positiveText(R.string.string_delete_course)
+            .negativeText(R.string.string_no_delete)
+            .positiveColor(getAccentColor(context))
+            .negativeColor(getPrimaryColor(context))
+            .onPositive { _, _ ->
+                onCallBack()
+            }
+            .show()
+    }
+
+
+    fun getString(@StringRes resId: Int) {
+        context.getString(resId)
     }
 }

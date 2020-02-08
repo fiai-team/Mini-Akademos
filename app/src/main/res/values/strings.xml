@@ -48,6 +48,11 @@
     <string name="saveAction">Guardar</string>
     <string name="addAction">Añadir</string>
     <string name="notRegisteredBrigadesText">No hay brigadas registradas</string>
+    <string name="notRegisteredSubjectsText">No hay asignaturas registradas</string>
+    <string name="changeViewMenuItemText">Cambiar vista</string>
+    <string name="new_turn_header">Nuevo turno</string>
+    <string name="local_field_hint">Local</string>
+    <string name="turnSubjectTitle">%s (%s)</string>
 
     <string-array name="periodsNamesArray">
         <item>Primer semestre</item>

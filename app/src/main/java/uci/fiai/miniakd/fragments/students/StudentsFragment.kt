@@ -79,11 +79,9 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
                 else {
                     showDialog()
                 }
-                return true
             }
             R.id.addBrigadeItem -> {
                 showDialogAddBrigade()
-                return true
             }
         }
         return false

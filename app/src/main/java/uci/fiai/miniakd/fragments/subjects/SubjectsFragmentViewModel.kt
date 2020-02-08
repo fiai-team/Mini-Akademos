@@ -38,6 +38,7 @@ class SubjectsFragmentViewModel(application: Application) : AndroidViewModelList
     fun insertSubject(subject: Subject) {
         Thread {
             MainDatabase.instance(context()).subjects.insert(subject)
+            update()
         }.start()
     }
 

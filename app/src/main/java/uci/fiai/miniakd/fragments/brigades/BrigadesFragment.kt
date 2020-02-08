@@ -41,9 +41,9 @@ class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
 
         viewModel.brigadesList.observe(this, Observer {
             if (it.isEmpty()) {
-                toggleUiVisibility()
+                toggleUiVisibility(true)
             } else {
-                toggleUiVisibility()
+                toggleUiVisibility(false)
                 context?.let { context ->
                     recyclerView.adapter = BrigadesRecyclerViewAdapter(context, it)
                 }
@@ -56,7 +56,6 @@ class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         when (actionItem?.id) {
             R.id.addBrigadeItem -> {
                 showDialogAddBrigade()
-                return true
             }
         }
         return false
@@ -73,16 +72,14 @@ class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener {
         }
     }
 
-    private fun toggleUiVisibility() {
-        if (recyclerView.visibility == View.VISIBLE)
+    private fun toggleUiVisibility(isEmpty: Boolean) {
+        if (isEmpty) {
             recyclerView.visibility = View.GONE
-        else
-            recyclerView.visibility = View.VISIBLE
-
-        if (emptyLayoutInclude.visibility == View.VISIBLE)
-            emptyLayoutInclude.visibility = View.GONE
-        else
             emptyLayoutInclude.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyLayoutInclude.visibility = View.GONE
+        }
     }
 
     fun onItemLongClickInteraction(brigade: Brigade, position: Int) {

@@ -35,4 +35,8 @@
         app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
         app:sdOverlayLayout="@id/speedDialOverlayLayout"/>
 
+    <include layout="@layout/layout_empty"
+        android:id="@+id/emptyLayoutInclude"
+        android:visibility="gone"/>
+
 </RelativeLayout>

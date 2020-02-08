@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_subjects.*
 import kotlinx.android.synthetic.main.recyclerviewitem_subject.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Subject
+import uci.fiai.miniakd.dialogs.MaterialDialogManager
 import uci.fiai.miniakd.dialogs.subject.SubjectBottomSheetDialog
 import uci.fiai.miniakd.extensions.*
 
@@ -29,25 +30,27 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this).get(SubjectsFragmentViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_subjects, container, false)
-    }
+        val root =  inflater.inflate(R.layout.fragment_subjects, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        root.findViewById<TextView>(R.id.emptyDescriptionTextView).setText(R.string.notRegisteredSubjectsText)
 
-        val speedDialView = view.findViewById<SpeedDialView>(R.id.speedDial)
+        val speedDialView = root.findViewById<SpeedDialView>(R.id.speedDial)
         speedDialView.inflate(R.menu.subjects_speeddial)
         speedDialView.setOnActionSelectedListener(this)
 
         viewModel.subjectsList.observe(this, Observer {
             if (it.isEmpty()) {
-
+                toggleUiVisibility(true)
             }
             else {
-                context?.let { context -> recyclerView.adapter = SubjectsAdapter(context, it) }
+                toggleUiVisibility(false)
+                context?.let {context ->
+                    recyclerView.adapter = SubjectsAdapter(context, it)
+                }
             }
         })
 
+        return root
     }
 
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
@@ -68,20 +71,25 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
             viewModel.insertSubject(subject)
     }
 
+    private fun toggleUiVisibility(isEmpty: Boolean) {
+        if (isEmpty) {
+            recyclerView.visibility = View.GONE
+            emptyLayoutInclude.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            emptyLayoutInclude.visibility = View.GONE
+        }
+    }
+
     private fun onStudentItemLongInteraction(subject: Subject, position: Int): Boolean {
         context?.let {
-            MaterialDialog.Builder(it)
-                .title(subject.name)
-                .iconRes(R.drawable.ic_edit)
-                .content("¿Qué desea hacer con la asignatura?")
-                .contentColor(getPrimaryColor(it))
-                .positiveText(R.string.string_edit)
-                .negativeText(R.string.string_remove)
-                .positiveColor(getAccentColor(it))
-                .negativeColor(getPrimaryColor(it))
-                .onPositive { _, _ -> showDialogEditSubject(subject) }
-                .onNegative { _, _ -> showDialogDeleteSubject(subject, position) }
-                .show()
+            MaterialDialogManager(it).showSubjectOptionsDialog(subject, position,
+                {
+                    showDialogEditSubject(subject)
+                },
+                { subject: Subject, i: Int ->
+                    showDialogDeleteSubject(subject, i)
+                })
         }
         return true
     }
@@ -94,35 +102,26 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
 
     private fun showDialogDeleteSubject(subject: Subject, position: Int) {
         activity?.let {
-            MaterialDialog.Builder(it)
-                .title("${getString(R.string.string_delete_course)} ${subject.name}")
-                .content("¿Desea eliminar la asignatura \"${subject.name}\"? También eliminará los turnos asociados.")
-                .contentColor(getPrimaryColor(it))
-                .positiveText(R.string.string_delete_course)
-                .negativeText(R.string.string_no_delete)
-                .positiveColor(getAccentColor(it))
-                .negativeColor(getPrimaryColor(it))
-                .onPositive { _, _ ->
-                    var canDelete = true
-                    val action = View.OnClickListener {
-                        (recyclerView.adapter as SubjectsAdapter).restoreItem(subject, position)
-                        canDelete = false
-                    }
-                    val callback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            super.onDismissed(transientBottomBar, event)
-
-                            if (canDelete)
-                                viewModel.removeSubject(subject)
-                        }
-                    }
-
-                    recyclerView.adapter?.let { adapter ->
-                        (adapter as SubjectsAdapter).removeItem(position)
-                    }
-                    showUndoSnackbar(getString(R.string.deletedSubjectMessage), action, callback)
+            MaterialDialogManager(it).showSubjectDeleteConfirmationDialog(subject) {
+                var canDelete = true
+                val action = View.OnClickListener {
+                    (recyclerView.adapter as SubjectsAdapter).restoreItem(subject, position)
+                    canDelete = false
                 }
-                .show()
+                val callback = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+
+                        if (canDelete)
+                            viewModel.removeSubject(subject)
+                    }
+                }
+
+                recyclerView.adapter?.let { adapter ->
+                    (adapter as SubjectsAdapter).removeItem(position)
+                }
+                showUndoSnackbar(getString(R.string.deletedSubjectMessage), action, callback)
+            }
         } ?: recyclerView.adapter?.notifyItemChanged(position)
     }
 

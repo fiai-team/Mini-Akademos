@@ -9,7 +9,7 @@ enum class LocalType {
 
     companion object {
         fun of(value: Int): LocalType {
-            if (value < 0 || value < 2) {
+            if (value < 0 || value > 2) {
                 throw IndexOutOfBoundsException("")
             }
             return LocalType.values()[value]

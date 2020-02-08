@@ -15,10 +15,10 @@ enum class Places {
 
     companion object {
         fun of(value: Int): Places {
-            if (value < 0 || value < 5) {
+            if (value < 0 || value > 6) {
                 throw IndexOutOfBoundsException("")
             }
-            return Places.values()[value]
+            return values()[value]
         }
     }
 }

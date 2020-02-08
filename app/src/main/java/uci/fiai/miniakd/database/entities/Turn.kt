@@ -10,16 +10,16 @@ import uci.fiai.miniakd.database.enums.Typology
 import uci.fiai.miniakd.extensions.empty
 
 @Entity(tableName = "Turn", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = ["id"], childColumns = ["subjectId"], onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE),
-    ForeignKey(entity = Brigade::class, parentColumns = ["id"], childColumns = ["brigadeId"], onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)
+    ForeignKey(entity = Subject::class, parentColumns = ["id"], childColumns = ["subjectId"], onDelete = ForeignKey.NO_ACTION, onUpdate = ForeignKey.NO_ACTION),
+    ForeignKey(entity = Brigade::class, parentColumns = ["id"], childColumns = ["brigadeId"], onDelete = ForeignKey.NO_ACTION, onUpdate = ForeignKey.NO_ACTION)
 ])
 @TypeConverters(PlaceConverter::class, LocalTypeConverter::class, TypologyConverter::class)
 class Turn() {
+
     @PrimaryKey(autoGenerate = true)
     var id = 0
     var subjectId = 0
     var brigadeId = 0
-    //TODO: Change this way to Date sql format
     var year = 0
     var month = 0
     var day = 0
@@ -28,5 +28,7 @@ class Turn() {
     var local = String.empty
     var localType = LocalType.Aula
     var typology = Typology.Conference
+    @Ignore
+    var subject: Subject? = null
 }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="localsEntries">
+        <item>1: Rubén Martínez</item>
+        <item>2: Ernesto Guevara</item>
+        <item>3: José Martí</item>
+        <item>4: Camilo Cienfuegos</item>
+        <item>5: José A. Echavarría</item>
+        <item>6: Mariana Grajales</item>
+        <item>Área deportiva</item>
+    </string-array>
+    <string-array name="localsTypesEntries">
+        <item>Salón</item>
+        <item>Aula</item>
+        <item>Laboratorio</item>
+    </string-array>
+    <string-array name="typologyEntries">
+        <item>Conferencia</item>
+        <item>Clase Práctica</item>
+        <item>Laboratorio</item>
+        <item>Taller</item>
+        <item>Seminario</item>
+        <item>Prueba Parcial</item>
+        <item>Evaluación Final</item>
+        <item>Actividad Extraordinaria</item>
+    </string-array>
+    <string-array name="turnEntries">
+        <item>Primer turno</item>
+        <item>Segundo turno</item>
+        <item>Tercer turno</item>
+        <item>Cuarto turno</item>
+        <item>Quinto turno</item>
+        <item>Sexto turno</item>
+    </string-array>
+</resources>

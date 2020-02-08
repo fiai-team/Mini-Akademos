@@ -15,7 +15,12 @@ interface SubjectDao {
     @Query("SELECT * FROM Subject")
     fun getAll() : List<Subject>
 
+    @Query("SELECT * FROM Subject WHERE id = :subjectId LIMIT 1")
+    fun getById(subjectId: Int) : Subject
+
     @Delete
     fun delete(subject: Subject)
+
+
 
 }
