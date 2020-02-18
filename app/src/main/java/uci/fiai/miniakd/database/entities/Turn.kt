@@ -10,8 +10,7 @@ import uci.fiai.miniakd.database.enums.Typology
 import uci.fiai.miniakd.extensions.empty
 
 @Entity(tableName = "Turn", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = ["id"], childColumns = ["subjectId"], onDelete = ForeignKey.NO_ACTION, onUpdate = ForeignKey.NO_ACTION),
-    ForeignKey(entity = Brigade::class, parentColumns = ["id"], childColumns = ["brigadeId"], onDelete = ForeignKey.NO_ACTION, onUpdate = ForeignKey.NO_ACTION)
+    ForeignKey(entity = Brigade::class, parentColumns = ["id"], childColumns = ["brigadeId"], onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)
 ])
 @TypeConverters(PlaceConverter::class, LocalTypeConverter::class, TypologyConverter::class)
 class Turn() {

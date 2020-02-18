@@ -18,6 +18,12 @@
         tools:layout="@layout/fragments_brigades" />
 
     <fragment
+        android:id="@+id/nav_studentsbybrigade"
+        android:name="uci.fiai.miniakd.fragments.students.inner.StudentsByBrigadeListFragment"
+        android:label="@string/brigades_header"
+        tools:layout="@layout/fragment_studentsbybrigade" />
+
+    <fragment
         android:id="@+id/nav_subjects"
         android:name="uci.fiai.miniakd.fragments.subjects.SubjectsFragment"
         android:label="@string/subjects_header"

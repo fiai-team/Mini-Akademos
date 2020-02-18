@@ -1,16 +1,14 @@
 package uci.fiai.miniakd.fragments.brigades
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
-import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
+import uci.fiai.miniakd.tasks.ViewModelListener
 
-class BrigadesFragmentViewModel(application: Application) : AndroidViewModelListener(application) {
+class BrigadesFragmentViewModel(private val context: Context) : ViewModelListener() {
 
     //region Mutable fields
     private val _brigadesList = MutableLiveData<ArrayList<Brigade>>()
@@ -24,15 +22,12 @@ class BrigadesFragmentViewModel(application: Application) : AndroidViewModelList
         update()
     }
 
-    override fun context(): Context {
-        return getApplication<Application>().applicationContext
-    }
 
-    override fun onTaskFinished(result: List<Any>, taskName: String) {
+    override fun onTaskFinished(result: ArrayList<Any>, taskName: String) {
         when(taskName) {
             LoadBrigadesAsyncTask::class.qualifiedName -> {
                 _brigadesList.apply {
-                    this.value = result as ArrayList<Brigade>
+                    this.value = result.filterIsInstance<Brigade>() as ArrayList<Brigade>
                 }
             }
         }
@@ -45,14 +40,14 @@ class BrigadesFragmentViewModel(application: Application) : AndroidViewModelList
 
     fun removeBrigade(brigade: Brigade) {
         Thread {
-            MainDatabase.instance(context()).brigades.delete(brigade)
+            MainDatabase.instance(context).brigades.delete(brigade)
             update()
         }.start()
     }
 
     fun addBrigade(name: String) {
         Thread {
-            MainDatabase.instance(context()).brigades.insertAll(Brigade(name))
+            MainDatabase.instance(context).brigades.insertAll(Brigade(name))
             update()
         }.start()
     }

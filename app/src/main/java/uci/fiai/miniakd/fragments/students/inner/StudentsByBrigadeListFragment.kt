@@ -25,13 +25,15 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
     private lateinit var viewModel: StudentsByBrigadeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(StudentsByBrigadeViewModel::class.java)
-        viewModel.init(arguments!!.getInt(BRIGADE_ARG, 0))
+        context?.apply {
+            viewModel = StudentsByBrigadeViewModel(this, arguments!!.getInt(BRIGADE_ARG, 0))
+        }
+
         val root =  inflater.inflate(R.layout.fragment_studentsbybrigade, container, false)
 
         root.findViewById<TextView>(R.id.emptyDescriptionTextView).text = getString(R.string.emptyStudentsByBrigade)
 
-        viewModel.studentsList.observe(this, Observer {
+        viewModel.studentsList.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 recyclerView.visibility = View.GONE
                 emptyLayoutInclude.visibility = View.VISIBLE

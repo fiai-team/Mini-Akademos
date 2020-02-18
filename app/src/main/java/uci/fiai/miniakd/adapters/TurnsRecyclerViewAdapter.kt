@@ -14,6 +14,12 @@ import java.util.*
 
 class TurnsRecyclerViewAdapter(private val context: Context, private var turns: ArrayList<Turn>) : RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.recyclerviewitem_turn, parent, false)
@@ -31,6 +37,9 @@ class TurnsRecyclerViewAdapter(private val context: Context, private var turns: 
                 turnSubjectTextView.text = context.getString(R.string.turnSubjectTitle, it.name, turn.typology.initialLetter)
                 timeTextView.text = DateUtils.getTurnTime(turn.timeTurn)
             }
+            turnItemLayout.setOnClickListener {
+
+            }
         }
     }
 
@@ -45,6 +54,7 @@ class TurnsRecyclerViewAdapter(private val context: Context, private var turns: 
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val turnItemLayout = itemView.turnItemLayout
         val turnSubjectTextView = itemView.turnSubjectTextView
         val timeTextView = itemView.timeTextView
     }

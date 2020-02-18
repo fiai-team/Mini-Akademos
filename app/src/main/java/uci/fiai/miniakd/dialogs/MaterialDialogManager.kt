@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import uci.fiai.miniakd.R
+import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Subject
 import uci.fiai.miniakd.extensions.*
@@ -49,7 +50,7 @@ class MaterialDialogManager(private val context: Context) {
             .show()
     }
 
-    fun showDialogDeleteBrigade(brigade: Brigade, onCallBack: () -> Unit) {
+    fun showRemoveBrigadeDialog(brigade: Brigade, onCallBack: () -> Unit) {
         MaterialDialog.Builder(context)
             .title(context.getString(R.string.string_delete_group_with_name, brigade.name))
             .content(R.string.string_delete_group_text)
@@ -96,5 +97,46 @@ class MaterialDialogManager(private val context: Context) {
 
     fun getString(@StringRes resId: Int) {
         context.getString(resId)
+    }
+
+    fun showBrigadeOptionsialog(brigade: Brigade, onPositiveCallback: () -> Unit, onNegativeCallback: () -> Unit) {
+        MaterialDialog.Builder(context)
+            .title("Brigada ${brigade.name}")
+            .iconRes(R.drawable.ic_edit)
+            .content("¿Qué desea hacer con la brigada?")
+            .contentColorRes(R.color.colorPrimary)
+            .positiveText(R.string.string_edit)
+            .negativeText(R.string.string_remove)
+            .positiveColorRes(R.color.colorAccent)
+            .negativeColorRes(R.color.colorPrimary)
+            .onPositive { _, _ ->
+                onPositiveCallback()
+            }
+            .onNegative { _, _ ->
+                onNegativeCallback()
+            }
+            .show()
+    }
+
+    fun showEditBrigadeDialog(brigade: Brigade, onInputCallback: (brigade: Brigade, input: CharSequence) -> Unit) {
+        MaterialDialog.Builder(context)
+            .title(R.string.string_edit_group)
+            .iconRes(R.drawable.ic_edit)
+            .contentColorRes(R.color.colorPrimaryDark)
+            .positiveText(R.string.string_edit)
+            .negativeText(R.string.string_cancel)
+            .positiveColorRes(R.color.colorAccent)
+            .negativeColorRes(R.color.colorPrimaryDark)
+            .input("Nombre de la brigada",  brigade.name, false) { _, input ->
+                onInputCallback(brigade, input)
+
+            }
+            .inputRange(4, 10)
+            .inputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)
+            .show()
+    }
+
+    fun showRemoveBrigadeDialog() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

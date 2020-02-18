@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Student
 
-class LoadStudentsByBrigadeAsyncTask(private val listener: AndroidViewModelListener) : AsyncTask<Int, Void, List<Student>>() {
+class LoadStudentsByBrigadeAsyncTask(private val listener: ViewModelListener) : AsyncTask<Int, Void, List<Student>>() {
 
     override fun doInBackground(vararg params: Int?): List<Student>? {
         return when {
