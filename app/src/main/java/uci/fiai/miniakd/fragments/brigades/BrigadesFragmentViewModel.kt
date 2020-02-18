@@ -8,7 +8,7 @@ import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 import uci.fiai.miniakd.tasks.ViewModelListener
 
-class BrigadesFragmentViewModel(private val context: Context) : ViewModelListener() {
+class BrigadesFragmentViewModel(context: Context) : ViewModelListener(context) {
 
     //region Mutable fields
     private val _brigadesList = MutableLiveData<ArrayList<Brigade>>()
@@ -23,7 +23,7 @@ class BrigadesFragmentViewModel(private val context: Context) : ViewModelListene
     }
 
 
-    override fun onTaskFinished(result: ArrayList<Any>, taskName: String) {
+    override fun onTaskFinished(result: ArrayList<*>, taskName: String) {
         when(taskName) {
             LoadBrigadesAsyncTask::class.qualifiedName -> {
                 _brigadesList.apply {

@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 
-abstract class ViewModelListener : ViewModel() {
+abstract class ViewModelListener(val context: Context) : ViewModel() {
 
-    abstract fun onTaskFinished(result: ArrayList<Any>, taskName: String)
+    abstract fun onTaskFinished(result: ArrayList<*>, taskName: String)
 }

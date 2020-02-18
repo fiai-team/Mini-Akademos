@@ -1,19 +1,18 @@
 package uci.fiai.miniakd.fragments.turns
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Subject
 import uci.fiai.miniakd.database.entities.Turn
-import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 import uci.fiai.miniakd.tasks.LoadSubjectsAsyncTask
 import uci.fiai.miniakd.tasks.LoadTurnsAsyncTask
+import uci.fiai.miniakd.tasks.ViewModelListener
 import java.util.*
 
-class TurnsFragmentViewModel(application: Application) : AndroidViewModelListener(application){
+class TurnsFragmentViewModel(context: Context) : ViewModelListener(context) {
 
     var turnForDateList = MutableLiveData<ArrayList<Turn>>()
 
@@ -29,25 +28,21 @@ class TurnsFragmentViewModel(application: Application) : AndroidViewModelListene
         update()
     }
 
-    override fun context(): Context {
-        return getApplication()
-    }
-
-    override fun onTaskFinished(result: List<Any>, taskName: String) {
+    override fun onTaskFinished(result: ArrayList<*>, taskName: String) {
         when (taskName) {
             LoadBrigadesAsyncTask::class.qualifiedName -> {
                 brigadesList.apply {
-                    this.value = result as ArrayList<Brigade>
+                    this.value = result.filterIsInstance<Brigade>() as ArrayList<Brigade>
                 }
             }
             LoadSubjectsAsyncTask::class.qualifiedName -> {
                 subjectsList.apply {
-                    this.value = result as ArrayList<Subject>
+                    this.value = result.filterIsInstance<Subject>() as ArrayList<Subject>
                 }
             }
             LoadTurnsAsyncTask::class.qualifiedName -> {
                 turnForDateList.apply {
-                    this.value = result as ArrayList<Turn>
+                    this.value = result.filterIsInstance<Turn>() as ArrayList<Turn>
                 }
             }
         }
@@ -67,7 +62,7 @@ class TurnsFragmentViewModel(application: Application) : AndroidViewModelListene
 
     fun insertTurn(turn: Turn) {
         Thread {
-            MainDatabase.instance(context()).turns.insertAll(turn)
+            MainDatabase.instance(context).turns.insertAll(turn)
             updateTurns()
         }.start()
     }

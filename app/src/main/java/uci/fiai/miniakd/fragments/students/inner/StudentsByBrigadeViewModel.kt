@@ -8,7 +8,7 @@ import uci.fiai.miniakd.database.entities.Student
 import uci.fiai.miniakd.tasks.LoadStudentsByBrigadeAsyncTask
 import uci.fiai.miniakd.tasks.ViewModelListener
 
-class StudentsByBrigadeViewModel (private val context: Context, private val brigadeArg: Int) : ViewModelListener() {
+class StudentsByBrigadeViewModel (context: Context, private val brigadeArg: Int) : ViewModelListener(context) {
 
     //region Mutable Fields
     private var _studentsList = MutableLiveData<ArrayList<Student>>()
@@ -22,11 +22,11 @@ class StudentsByBrigadeViewModel (private val context: Context, private val brig
         update()
     }
 
-    override fun onTaskFinished(result: List<Any>, taskName: String) {
+    override fun onTaskFinished(result: ArrayList<*>, taskName: String) {
         when(taskName) {
             LoadStudentsByBrigadeAsyncTask::class.qualifiedName -> {
                 _studentsList.apply {
-                    this.value =  result as ArrayList<Student>
+                    this.value =  result.filterIsInstance<Student>() as ArrayList<Student>
                 }
             }
         }

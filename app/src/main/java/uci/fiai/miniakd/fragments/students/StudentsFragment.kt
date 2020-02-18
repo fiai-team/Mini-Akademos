@@ -26,7 +26,9 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
     private var currentIndex = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(StudentsFragmentViewModel::class.java)
+        context?.apply {
+            viewModel = StudentsFragmentViewModel(this)
+        }
         val root =  inflater.inflate(R.layout.fragment_students, container, false) as RelativeLayout
 
         val speedDialView = root.findViewById<SpeedDialView>(R.id.speedDial)

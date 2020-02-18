@@ -9,9 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -22,14 +20,16 @@ import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Subject
 import uci.fiai.miniakd.dialogs.MaterialDialogManager
 import uci.fiai.miniakd.dialogs.subject.SubjectBottomSheetDialog
-import uci.fiai.miniakd.extensions.*
+import uci.fiai.miniakd.extensions.showUndoSnackbar
 
 class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, SubjectBottomSheetDialog.AddSubjectListener {
 
     private lateinit var viewModel: SubjectsFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(SubjectsFragmentViewModel::class.java)
+        context?.apply {
+            viewModel = SubjectsFragmentViewModel(this)
+        }
         val root =  inflater.inflate(R.layout.fragment_subjects, container, false)
 
         root.findViewById<TextView>(R.id.emptyDescriptionTextView).setText(R.string.notRegisteredSubjectsText)
@@ -38,7 +38,7 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
         speedDialView.inflate(R.menu.subjects_speeddial)
         speedDialView.setOnActionSelectedListener(this)
 
-        viewModel.subjectsList.observe(this, Observer {
+        viewModel.subjectsList.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 toggleUiVisibility(true)
             }
@@ -56,7 +56,7 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
     override fun onActionSelected(actionItem: SpeedDialActionItem?): Boolean {
         when (actionItem?.id) {
             R.id.addSubjectItem -> {
-                fragmentManager?.let {
+                parentFragmentManager.let {
                     SubjectBottomSheetDialog.newInstance(this@SubjectsFragment).show(it, SubjectBottomSheetDialog.TAG)
                 }
             }
@@ -95,7 +95,7 @@ class SubjectsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Sub
     }
 
     private fun showDialogEditSubject(subject: Subject) {
-        fragmentManager?.let {
+        parentFragmentManager.let {
             SubjectBottomSheetDialog.newInstance(this, subject).show(it, SubjectBottomSheetDialog.TAG)
         }
     }

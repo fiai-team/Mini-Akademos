@@ -1,39 +1,33 @@
 package uci.fiai.miniakd.fragments.students
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.addStudent
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Student
-import uci.fiai.miniakd.tasks.AndroidViewModelListener
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
+import uci.fiai.miniakd.tasks.ViewModelListener
 
-class StudentsFragmentViewModel(application: Application) : AndroidViewModelListener(application) {
+class StudentsFragmentViewModel(context: Context) : ViewModelListener(context) {
 
     //region Mutable Fields
-    private var _brigadesList = MutableLiveData<List<Brigade>>()
+    private var _brigadesList = MutableLiveData<ArrayList<Brigade>>()
     //endregion
 
-    val brigadesList: LiveData<List<Brigade>> = _brigadesList
+    val brigadesList: LiveData<ArrayList<Brigade>> = _brigadesList
     //endregion
 
     init {
         update()
     }
 
-    override fun context(): Context {
-        return getApplication<Application>().applicationContext
-    }
-
-    override fun onTaskFinished(result: List<Any>, taskName: String) {
+    override fun onTaskFinished(result: ArrayList<*>, taskName: String) {
         when(taskName) {
             LoadBrigadesAsyncTask::class.qualifiedName -> {
                 _brigadesList.apply {
-                    this.value = result as List<Brigade>
+                    this.value = result.filterIsInstance<Brigade>() as ArrayList<Brigade>
                 }
             }
         }
@@ -45,7 +39,7 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModelList
 
     fun addBrigade(name: String) {
         Thread {
-            MainDatabase.instance(context()).brigades.insertAll(Brigade(name))
+            MainDatabase.instance(context).brigades.insertAll(Brigade(name))
             update()
         }.start()
     }
@@ -57,7 +51,7 @@ class StudentsFragmentViewModel(application: Application) : AndroidViewModelList
 
     fun addStudent(student: Student) {
         Thread {
-            addStudent(context(), student)
+            addStudent(context, student)
             update()
         }.start()
     }

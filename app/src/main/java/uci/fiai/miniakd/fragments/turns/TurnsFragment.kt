@@ -26,8 +26,9 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
     private lateinit var viewModel: TurnsFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(TurnsFragmentViewModel::class.java)
-
+        context?.apply {
+            viewModel = TurnsFragmentViewModel(this)
+        }
         setHasOptionsMenu(true)
 
         val root = inflater.inflate(R.layout.fragment_turns, container, false)
@@ -36,7 +37,7 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
         speedDialView.inflate(R.menu.turns_speeddial)
         speedDialView.setOnActionSelectedListener(this)
 
-        viewModel.turnForDateList.observe(this, Observer {
+        viewModel.turnForDateList.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 emptyTurnsTextView.visibility = View.VISIBLE
                 emptyTurnsTextView.text = getString(R.string.emptyTurns, turnsDatePickerTimeline.selectedDateFormatted())
@@ -67,7 +68,7 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
                 showToday()
             }
             R.id.addTurnItem -> {
-                fragmentManager?.let {
+                parentFragmentManager.let {
                     TurnsBottomSheetDialog.newInstance(this@TurnsFragment, viewModel.brigadesList.value!!, viewModel.subjectsList.value!!, getDate()
                     ).show(it, TurnsBottomSheetDialog.TAG)
                 }
@@ -90,7 +91,7 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
     }
 
     private fun showDialogEditSubject(turn: Turn) {
-        fragmentManager?.let {
+        parentFragmentManager.let {
             TurnsBottomSheetDialog.newInstance(this@TurnsFragment, turn, viewModel.brigadesList.value!!, viewModel.subjectsList.value!!, getDate()
             ).show(it, TurnsBottomSheetDialog.TAG)
         }
