@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -18,6 +19,7 @@ import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.dialogs.MaterialDialogManager
 import uci.fiai.miniakd.extensions.*
+import uci.fiai.miniakd.fragments.students.inner.StudentsByBrigadeListFragment
 import uci.fiai.miniakd.utils.snackBar
 
 class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener, BrigadesRecyclerViewAdapter.OnBrigadesRecyclerViewAdapterListener {
@@ -60,7 +62,9 @@ class BrigadesFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Bri
     }
 
     override fun onBrigadeItemClick(brigade: Brigade, position: Int) {
-
+        val args = Bundle()
+        args.putInt(StudentsByBrigadeListFragment.BRIGADE_ID_ARG, brigade.id)
+        findNavController().navigate(R.id.action_nav_brigades_to_nav_studentsbybrigade, args)
     }
 
 

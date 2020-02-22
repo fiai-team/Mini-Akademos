@@ -127,7 +127,7 @@ class StudentsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, Add
         override fun getItem(position: Int): StudentsByBrigadeListFragment {
             val fragment = StudentsByBrigadeListFragment()
             val arguments = Bundle()
-            arguments.putInt(StudentsByBrigadeListFragment.BRIGADE_ARG, viewModel.brigadesList.value!![position].id)
+            arguments.putInt(StudentsByBrigadeListFragment.BRIGADE_ID_ARG, viewModel.brigadesList.value!![position].id)
             fragment.arguments = arguments
             return fragment
         }

@@ -13,4 +13,7 @@ interface TurnDao {
 
     @Query("SELECT * FROM Turn WHERE day = :day AND month = :month AND year = :year")
     fun getAllByDate(year: Int, month: Int, day: Int): List<Turn>
+
+    @Query("SELECT * FROM Turn WHERE id = :id LIMIT 1")
+    fun findById(id: Int): Turn
 }

@@ -12,13 +12,7 @@ import uci.fiai.miniakd.database.enums.initialLetter
 import uci.fiai.miniakd.utils.DateUtils
 import java.util.*
 
-class TurnsRecyclerViewAdapter(private val context: Context, private var turns: ArrayList<Turn>) : RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-
-
-    }
+class TurnsRecyclerViewAdapter(private val context: Context, private val listener: TurnsRecyclerViewAdapterListener, private val turns: ArrayList<Turn>) : RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -38,7 +32,7 @@ class TurnsRecyclerViewAdapter(private val context: Context, private var turns: 
                 timeTextView.text = DateUtils.getTurnTime(turn.timeTurn)
             }
             turnItemLayout.setOnClickListener {
-
+                listener.onTurnItemClick(turns[position], position)
             }
         }
     }
@@ -57,5 +51,9 @@ class TurnsRecyclerViewAdapter(private val context: Context, private var turns: 
         val turnItemLayout = itemView.turnItemLayout
         val turnSubjectTextView = itemView.turnSubjectTextView
         val timeTextView = itemView.timeTextView
+    }
+
+    interface TurnsRecyclerViewAdapterListener {
+        fun onTurnItemClick(turn: Turn, position: Int)
     }
 }

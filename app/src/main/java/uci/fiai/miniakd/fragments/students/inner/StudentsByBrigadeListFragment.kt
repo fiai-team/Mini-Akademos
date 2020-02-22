@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -26,7 +25,7 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         context?.apply {
-            viewModel = StudentsByBrigadeViewModel(this, arguments!!.getInt(BRIGADE_ARG, 0))
+            viewModel = StudentsByBrigadeViewModel(this, arguments!!.getInt(BRIGADE_ID_ARG, 0))
         }
 
         val root =  inflater.inflate(R.layout.fragment_studentsbybrigade, container, false)
@@ -147,6 +146,6 @@ class StudentsByBrigadeListFragment : Fragment(), AddStudentBottomSheetDialog.Ad
     }
 
     companion object {
-        const val BRIGADE_ARG = "BRIGADE_ARG"
+        const val BRIGADE_ID_ARG = "BRIGADE_ID_ARG"
     }
 }

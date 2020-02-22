@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.github.badoualy.datepicker.DatePickerTimeline
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.leinardi.android.speeddial.SpeedDialView
@@ -19,9 +19,12 @@ import uci.fiai.miniakd.extensions.getDay
 import uci.fiai.miniakd.extensions.getMonth
 import uci.fiai.miniakd.extensions.getYear
 import uci.fiai.miniakd.extensions.selectedDateFormatted
+import uci.fiai.miniakd.fragments.turns.details.TurnDetailsFragment
 import java.util.*
 
-class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsBottomSheetDialog.AddTurnListener {
+class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsBottomSheetDialog.AddTurnListener,
+    TurnsRecyclerViewAdapter.TurnsRecyclerViewAdapterListener {
+
 
     private lateinit var viewModel: TurnsFragmentViewModel
 
@@ -45,7 +48,7 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
                 emptyTurnsTextView.visibility = View.GONE
             }
             context?.apply {
-                turnsRecyclerView.adapter = TurnsRecyclerViewAdapter(this, it)
+                turnsRecyclerView.adapter = TurnsRecyclerViewAdapter(this, this@TurnsFragment, it)
             }
         })
 
@@ -83,6 +86,12 @@ class TurnsFragment : Fragment(), SpeedDialView.OnActionSelectedListener, TurnsB
         } else {
             viewModel.insertTurn(turn!!)
         }
+    }
+
+    override fun onTurnItemClick(turn: Turn, position: Int) {
+        val args = Bundle()
+        args.putInt(TurnDetailsFragment.TURN_ID_ARG, turn.id)
+        findNavController().navigate(R.id.action_nav_turns_to_nav_turns_details, args)
     }
 
     private fun showToday() {
