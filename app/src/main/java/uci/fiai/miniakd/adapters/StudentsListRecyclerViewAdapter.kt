@@ -23,7 +23,7 @@ class StudentsListRecyclerViewAdapter(private val students: ArrayList<Student>, 
 
         with(holder.view) {
             setOnClickListener {
-                listener?.onListFragmentInteraction(student)
+                listener.onListFragmentInteraction(student)
             }
         }
     }

@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerviewitem_brigade.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Brigade
+import uci.fiai.miniakd.extensions.InteractiveAdapter
 
-class BrigadesRecyclerViewAdapter (private val context: Context, private val listener: OnBrigadesRecyclerViewAdapterListener, private val brigades: ArrayList<Brigade>) : RecyclerView.Adapter<BrigadesRecyclerViewAdapter.ViewHolder>() {
+class BrigadesRecyclerViewAdapter (private val context: Context, private val listener: OnBrigadesRecyclerViewAdapterListener, private val brigades: ArrayList<Brigade>) : InteractiveAdapter<Brigade, BrigadesRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recyclerviewitem_brigade, parent, false)
@@ -39,13 +40,13 @@ class BrigadesRecyclerViewAdapter (private val context: Context, private val lis
         return brigades.count()
     }
 
-    fun removeItem(position: Int) {
+    override fun removeItem(position: Int) {
         brigades.remove(brigades[position])
         notifyItemRemoved(position)
     }
 
-    fun restoreItem(brigade: Brigade, position: Int) {
-        brigades.add(position, brigade)
+    override fun restoreItem(obj: Brigade, position: Int) {
+        brigades.add(position, obj)
         notifyItemInserted(position)
     }
 

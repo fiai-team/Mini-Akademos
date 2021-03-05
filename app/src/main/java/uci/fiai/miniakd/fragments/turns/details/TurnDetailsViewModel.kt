@@ -28,9 +28,9 @@ class TurnDetailsViewModel(context: Context, val turnId: Int) : ViewModelListene
 
     fun update() {
         Thread {
-            val db =MainDatabase.instance(context)
+            /*val db =MainDatabase.instance(context)
             val turn = db.turns.findById(turnId)
-            LoadStudentsByTurnAsyncTask(turn, this).execute()
+            LoadStudentsByTurnAsyncTask(turn, this).execute()*/
         }.start()
 
     }

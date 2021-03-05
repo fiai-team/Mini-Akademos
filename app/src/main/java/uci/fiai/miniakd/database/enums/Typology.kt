@@ -3,14 +3,14 @@ package uci.fiai.miniakd.database.enums
 import java.lang.IndexOutOfBoundsException
 
 enum class Typology {
-    Conference,
-    Practice_class,
-    Laboratory,
-    Taller,
-    Seminary,
-    Partial_exam,
-    Final_exam,
-    Extraordinary_activity;
+    CONFERENCE,
+    PRACTICE_CLASS,
+    LABORATORY,
+    TALLER,
+    SEMINARY,
+    PARTIAL_EXAM,
+    FINAL_EXAM,
+    EXTRAORDINARY_ACTIVITY;
 
     companion object {
         fun of(value: Int): Typology {
@@ -21,20 +21,21 @@ enum class Typology {
         }
         fun initialLetter(typology: Typology) : String {
             return when (typology) {
-                Conference -> "C"
-                Practice_class -> "PC"
-                Laboratory -> "L"
-                Taller -> "T"
-                Seminary -> "S"
-                Partial_exam -> "PP"
-                Final_exam -> "PF"
-                Extraordinary_activity -> "EX"
+                CONFERENCE -> "C"
+                PRACTICE_CLASS -> "PC"
+                LABORATORY -> "L"
+                TALLER -> "T"
+                SEMINARY -> "S"
+                PARTIAL_EXAM -> "PP"
+                FINAL_EXAM -> "PF"
+                EXTRAORDINARY_ACTIVITY -> "EX"
             }
         }
     }
+
+    val initialLetter: String?
+        get() {
+            return Typology.initialLetter(this)
+        }
 }
 
-val Typology.initialLetter: String?
-    get() {
-        return Typology.initialLetter(this)
-    }

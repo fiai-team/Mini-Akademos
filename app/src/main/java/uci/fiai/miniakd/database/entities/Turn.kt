@@ -8,6 +8,9 @@ import uci.fiai.miniakd.database.enums.LocalType
 import uci.fiai.miniakd.database.enums.Places
 import uci.fiai.miniakd.database.enums.Typology
 import uci.fiai.miniakd.extensions.empty
+import java.sql.Date
+import java.time.Instant
+import java.util.*
 
 @Entity(tableName = "Turn", foreignKeys = [
     ForeignKey(entity = Brigade::class, parentColumns = ["id"], childColumns = ["brigadeId"], onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)
@@ -23,11 +26,12 @@ class Turn() {
     var month = 0
     var day = 0
     var timeTurn = 0
-    var place = Places.Docent1
+    var place = Places.DOCENT1
     var local = String.empty
-    var localType = LocalType.Aula
-    var typology = Typology.Conference
+    var localType = LocalType.AULA
+    var typology = Typology.CONFERENCE
     @Ignore
     var subject: Subject? = null
+
 }
 

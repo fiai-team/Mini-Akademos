@@ -6,10 +6,12 @@ import uci.fiai.miniakd.database.MainDatabase
 import uci.fiai.miniakd.database.entities.Brigade
 import uci.fiai.miniakd.database.entities.Subject
 import uci.fiai.miniakd.database.entities.Turn
+import uci.fiai.miniakd.database.entities.TurnAssistance
 import uci.fiai.miniakd.tasks.LoadBrigadesAsyncTask
 import uci.fiai.miniakd.tasks.LoadSubjectsAsyncTask
 import uci.fiai.miniakd.tasks.LoadTurnsAsyncTask
 import uci.fiai.miniakd.tasks.ViewModelListener
+import java.sql.Date
 import java.util.*
 
 class TurnsFragmentViewModel(context: Context) : ViewModelListener(context) {
@@ -62,7 +64,19 @@ class TurnsFragmentViewModel(context: Context) : ViewModelListener(context) {
 
     fun insertTurn(turn: Turn) {
         Thread {
-            MainDatabase.instance(context).turns.insertAll(turn)
+            val savedTurn = MainDatabase.instance(context).turns.insertAll(turn)
+            /*val students = MainDatabase.instance(context).students.getAllByBrigade(turn.brigadeId)
+            for (student in students) {
+                val turnAssistance = TurnAssistance()
+                turnAssistance.brigadeId = turn.brigadeId
+                turnAssistance.studentId = student.id
+                turnAssistance.day = turn.day
+                turnAssistance.month = turn.month
+                turnAssistance.year = turn.year
+                turnAssistance.turnId = savedTurn.id
+                MainDatabase.instance(context).turnAssistance.create(turnAssistance)
+            }*/
+
             updateTurns()
         }.start()
     }

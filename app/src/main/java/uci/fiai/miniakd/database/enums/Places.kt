@@ -5,7 +5,7 @@ import java.time.DateTimeException
 import java.time.Month
 
 enum class Places {
-    Docent1,
+    DOCENT1,
     Docent2,
     Docent3,
     Docent4,

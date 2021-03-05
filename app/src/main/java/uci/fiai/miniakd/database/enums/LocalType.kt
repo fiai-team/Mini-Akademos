@@ -4,7 +4,7 @@ import java.lang.IndexOutOfBoundsException
 
 enum class LocalType {
     Salon,
-    Aula,
+    AULA,
     Laboratory;
 
     companion object {

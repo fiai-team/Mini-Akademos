@@ -4,15 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.recyclerviewitem_turn.view.*
 import uci.fiai.miniakd.R
 import uci.fiai.miniakd.database.entities.Turn
-import uci.fiai.miniakd.database.enums.initialLetter
+import uci.fiai.miniakd.extensions.InteractiveAdapter
 import uci.fiai.miniakd.utils.DateUtils
 import java.util.*
 
-class TurnsRecyclerViewAdapter(private val context: Context, private val listener: TurnsRecyclerViewAdapterListener, private val turns: ArrayList<Turn>) : RecyclerView.Adapter<TurnsRecyclerViewAdapter.ViewHolder>() {
+class TurnsRecyclerViewAdapter(private val context: Context, private val listener: TurnsRecyclerViewAdapterListener, private val turns: ArrayList<Turn>) : InteractiveAdapter<Turn, TurnsRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -37,20 +39,20 @@ class TurnsRecyclerViewAdapter(private val context: Context, private val listene
         }
     }
 
-    fun removeItem(position: Int) {
+    override fun removeItem(position: Int) {
         turns.remove(turns[position])
         notifyItemRemoved(position)
     }
 
-    fun restoreItem(subject: Turn, position: Int) {
-        turns.add(position, subject)
+    override fun restoreItem(obj: Turn, position: Int) {
+        turns.add(position, obj)
         notifyItemInserted(position)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val turnItemLayout = itemView.turnItemLayout
-        val turnSubjectTextView = itemView.turnSubjectTextView
-        val timeTextView = itemView.timeTextView
+        val turnItemLayout: MaterialCardView = itemView.turnItemLayout
+        val turnSubjectTextView: TextView = itemView.turnSubjectTextView
+        val timeTextView: TextView = itemView.timeTextView
     }
 
     interface TurnsRecyclerViewAdapterListener {
